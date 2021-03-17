@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITEJA_ICSHP_Jačková_Nikola.Parser
+namespace LanguageLibrary
 {
-    class Parser
+    class LanguageException : Exception
     {
+        public LanguageException(string message) : base(message) { }
     }
 }

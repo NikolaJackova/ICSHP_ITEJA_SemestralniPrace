@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITEJA_ICSHP_Jačková_Nikola", "ITEJA_ICSHP_Jačková_Nikola\ITEJA_ICSHP_Jačková_Nikola.csproj", "{0D47F8BD-418E-4187-AF0F-5ED63FCC7E00}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1FBDD7CC-3644-4708-B097-C4FDDECDCC1F} = {1FBDD7CC-3644-4708-B097-C4FDDECDCC1F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageLibrary", "LanguageLibrary\LanguageLibrary.csproj", "{1FBDD7CC-3644-4708-B097-C4FDDECDCC1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{0D47F8BD-418E-4187-AF0F-5ED63FCC7E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D47F8BD-418E-4187-AF0F-5ED63FCC7E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D47F8BD-418E-4187-AF0F-5ED63FCC7E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FBDD7CC-3644-4708-B097-C4FDDECDCC1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBDD7CC-3644-4708-B097-C4FDDECDCC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FBDD7CC-3644-4708-B097-C4FDDECDCC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FBDD7CC-3644-4708-B097-C4FDDECDCC1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
