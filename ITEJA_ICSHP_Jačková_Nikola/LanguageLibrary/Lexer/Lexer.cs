@@ -25,7 +25,6 @@ namespace LanguageLibrary.Lexer
             {
                 return Enumerator.Current;
             }
-            //throw new IndexOutOfRangeException("There is no more tokens!");
             return null;
         }
         public string TokensToString() {

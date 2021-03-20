@@ -8,5 +8,9 @@ namespace LanguageLibrary.Parser.Expressions
 {
     class PlusUnary : UnaryExpression
     {
+        public PlusUnary(Expression expr) :base(expr)
+        {
+            Operation = "+";
+        }
     }
 }

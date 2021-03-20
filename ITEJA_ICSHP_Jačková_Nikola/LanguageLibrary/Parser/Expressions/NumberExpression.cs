@@ -8,5 +8,10 @@ namespace LanguageLibrary.Parser.Expressions
 {
     class NumberExpression
     {
+        public double Value { get; private set; }
+
+        public NumberExpression(double number) {
+            Value = number;
+        }
     }
 }

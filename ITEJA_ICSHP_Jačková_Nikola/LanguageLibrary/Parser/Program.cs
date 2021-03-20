@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLibrary.Parser.Statements
+namespace LanguageLibrary.Parser
 {
-    class ElseStatement : Statement
+    class Program
     {
+        public Block Block { get; private set; }
     }
 }

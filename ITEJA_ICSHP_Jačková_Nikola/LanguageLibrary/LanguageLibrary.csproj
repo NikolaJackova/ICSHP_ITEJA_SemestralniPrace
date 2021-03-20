@@ -46,6 +46,7 @@
     <Compile Include="Lexer\LexerEngine.cs" />
     <Compile Include="Lexer\Tokens\Token.cs" />
     <Compile Include="Lexer\Tokens\TokenType.cs" />
+    <Compile Include="Parser\Block.cs" />
     <Compile Include="Parser\Conditions\Condition.cs" />
     <Compile Include="Parser\Conditions\EqualsRel.cs" />
     <Compile Include="Parser\Conditions\GreaterEqThanRel.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Parser\Conditions\NotEqualRel.cs" />
     <Compile Include="Parser\Expressions\BinaryExpression.cs" />
     <Compile Include="Parser\Expressions\Divide.cs" />
+    <Compile Include="Parser\Expressions\Expression.cs" />
     <Compile Include="Parser\Expressions\Minus.cs" />
     <Compile Include="Parser\Expressions\MinusUnary.cs" />
     <Compile Include="Parser\Expressions\Multiply.cs" />
@@ -64,6 +66,7 @@
     <Compile Include="Parser\Expressions\StringExpression.cs" />
     <Compile Include="Parser\Expressions\UnaryExpression.cs" />
     <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\Program.cs" />
     <Compile Include="Parser\Statements\ElseStatement.cs" />
     <Compile Include="Parser\Statements\ForStatement.cs" />
     <Compile Include="Parser\Statements\IfStatement.cs" />

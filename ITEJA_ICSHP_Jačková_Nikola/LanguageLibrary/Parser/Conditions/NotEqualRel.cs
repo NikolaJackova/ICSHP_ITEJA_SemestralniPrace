@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageLibrary.Parser.Expressions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace LanguageLibrary.Parser.Conditions
 {
     class NotEqualRel : Condition
     {
+        public NotEqualRel(Expression left, Expression right) : base(left, right)
+        {
+            Operation = "!=";
+        }
     }
 }

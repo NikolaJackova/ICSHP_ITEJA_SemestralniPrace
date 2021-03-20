@@ -8,5 +8,12 @@ namespace LanguageLibrary.Parser.Expressions
 {
     class UnaryExpression
     {
+        public Expression Expression { get; protected set; }
+        public string Operation { get; protected set; }
+
+        public UnaryExpression(Expression expr)
+        {
+            Expression = expr;
+        }
     }
 }

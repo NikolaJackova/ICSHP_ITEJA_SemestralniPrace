@@ -8,5 +8,9 @@ namespace LanguageLibrary.Parser.Expressions
 {
     class Multiply : BinaryExpression
     {
+        public Multiply(Expression left, Expression right) : base(left, right)
+        {
+            Operation = "*";
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    class MethodStatement
+    class MethodStatement : Statement
     {
     }
 }

@@ -8,5 +8,9 @@ namespace LanguageLibrary.Parser.Expressions
 {
     class MinusUnary : UnaryExpression
     {
+        public MinusUnary(Expression expr) : base(expr)
+        {
+            Operation = "-";
+        }
     }
 }

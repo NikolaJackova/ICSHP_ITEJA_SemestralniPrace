@@ -8,5 +8,9 @@ namespace LanguageLibrary.Parser.Expressions
 {
     class Plus : BinaryExpression
     {
+        public Plus(Expression left, Expression right) : base(left, right)
+        {
+            Operation = "+";
+        }
     }
 }

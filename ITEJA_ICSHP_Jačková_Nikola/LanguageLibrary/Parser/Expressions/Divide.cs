@@ -8,5 +8,9 @@ namespace LanguageLibrary.Parser.Expressions
 {
     class Divide : BinaryExpression
     {
+        public Divide(Expression left, Expression right) :base(left, right)
+        {
+            Operation = "/";
+        }
     }
 }
