@@ -1,0 +1,11 @@
+BEGIN
+var hello = "Hello World!";
+var counter1 = 0;
+while (counter1 < 10){
+   if(counter1 == 5){
+      method Print("Counter is 5!");
+   }
+   method Vypis(hello);
+   counter1 = counter1 + 1;
+}
+END.

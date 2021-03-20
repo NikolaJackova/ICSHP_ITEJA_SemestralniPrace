@@ -1,0 +1,13 @@
+BEGIN
+var a = 0;
+var hello12345;
+if(1 < a){
+   for i, from 1 to 5, i = i+2 {
+      hello12345 = "Hello!";
+      a = 1 * 2 + 3 / 5;
+   }
+} else {
+   hello12345 = "World!";
+}
+method Print(hello12345 + a);
+END.
