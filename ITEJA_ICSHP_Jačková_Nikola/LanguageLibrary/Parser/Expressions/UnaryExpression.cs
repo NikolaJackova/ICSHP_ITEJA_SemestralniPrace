@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Expressions
 {
-    class UnaryExpression
+    class UnaryExpression : Expression
     {
         public Expression Expression { get; protected set; }
         public string Operation { get; protected set; }

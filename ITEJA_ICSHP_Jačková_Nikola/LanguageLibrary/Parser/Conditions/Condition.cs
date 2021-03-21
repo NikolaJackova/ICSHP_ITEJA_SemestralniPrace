@@ -13,6 +13,10 @@ namespace LanguageLibrary.Parser.Conditions
         public Expression Right { get; private set; }
         public string Operation { get; protected set; }
 
+        public Condition(Expression expression) {
+            Left = expression;
+        }
+
         public Condition(Expression left, Expression right)
         {
             Left = left;

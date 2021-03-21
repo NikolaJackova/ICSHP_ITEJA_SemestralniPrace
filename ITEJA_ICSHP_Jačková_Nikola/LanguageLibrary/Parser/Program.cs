@@ -9,5 +9,10 @@ namespace LanguageLibrary.Parser
     class Program
     {
         public Block Block { get; private set; }
+
+        public Program(Block block)
+        {
+            Block = block;
+        }
     }
 }

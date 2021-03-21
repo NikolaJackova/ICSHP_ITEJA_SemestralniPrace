@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Expressions
 {
-    class NumberExpression
+    class NumberExpression : Expression
     {
         public double Value { get; private set; }
 

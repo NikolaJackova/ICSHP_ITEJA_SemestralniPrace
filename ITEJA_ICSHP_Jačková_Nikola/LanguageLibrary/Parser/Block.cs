@@ -10,5 +10,10 @@ namespace LanguageLibrary.Parser
     class Block
     {
         public LinkedList<Statement> Statements { get; private set; }
+
+        public Block(LinkedList<Statement> statements)
+        {
+            Statements = statements;
+        }
     }
 }

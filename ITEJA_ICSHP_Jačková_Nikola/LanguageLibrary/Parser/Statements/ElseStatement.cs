@@ -8,5 +8,10 @@ namespace LanguageLibrary.Parser.Statements
 {
     class ElseStatement : Statement
     {
+        public Block Block { get; private set; }
+        public ElseStatement(Block block)
+        {
+            Block = block;
+        }
     }
 }
