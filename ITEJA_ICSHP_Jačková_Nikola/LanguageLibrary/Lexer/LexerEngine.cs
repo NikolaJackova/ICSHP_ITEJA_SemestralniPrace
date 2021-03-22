@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Lexer
 {
+    /// <summary>
+    /// Internal class which performs lexical analysis
+    /// </summary>
     class LexerEngine
     {
         private char CurrentChar { get; set; }
@@ -15,6 +18,10 @@ namespace LanguageLibrary.Lexer
         private IDictionary<string, TokenType> KeyWords { get; set; }
 
         #region Public Methods
+        /// <summary>
+        /// Constructor which initialize LexerEngine
+        /// </summary>
+        /// <param name="source">Source code</param>
         public LexerEngine(string source)
         {
             InitDictionary();
@@ -22,7 +29,10 @@ namespace LanguageLibrary.Lexer
             Position = 0;
             CurrentChar = Source[Position];
         }
-
+        /// <summary>
+        /// Loading tokens into LinkedList
+        /// </summary>
+        /// <returns>LinkedList filled with tokens</returns>
         public LinkedList<Token> LoadList()
         {
             LinkedList<Token> tokens = new LinkedList<Token>();

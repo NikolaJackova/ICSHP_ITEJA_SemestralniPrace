@@ -17,7 +17,7 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         [STAThread]
         static void Main()
         {
-            string file = "D:\\OneDrive\\FEI\\03Programování v .NET a C#\\Semestrální práce\\ICSHP_ITEJA_SemestralniPrace\\ITEJA_ICSHP_Jačková_Nikola\\Grammar\\Example01.txt";
+            string file = "D:\\OneDrive\\FEI\\03Programování v .NET a C#\\Semestrální práce\\ICSHP_ITEJA_SemestralniPrace\\ITEJA_ICSHP_Jačková_Nikola\\Grammar\\Example03.txt";
             file = File.ReadAllText(file);
             Lexer lexer = new Lexer(file);
             Parser parser = new Parser(lexer);

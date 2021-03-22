@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Lexer.Tokens
 {
+    /// <summary>
+    /// Enum representing possible types of tokens
+    /// </summary>
     public enum TokenType
     {
         BEGIN,

@@ -9,5 +9,13 @@ if(1 < a){
 } else {
    hello12345 = "World!";
 }
+while(1 != a){
+      var b, c;
+      b = 0;
+      c = 1;	      
+      if (c > b){
+      	method Print(hello12345 + a, 5);
+      }
+}
 method Print(hello12345 + a);
 END.

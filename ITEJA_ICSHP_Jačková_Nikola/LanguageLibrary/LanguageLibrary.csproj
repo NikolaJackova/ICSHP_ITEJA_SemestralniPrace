@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AST\IASTItem.cs" />
     <Compile Include="AST\IVisitor.cs" />
+    <Compile Include="Interpreter\Interpreter.cs" />
     <Compile Include="LanguageException.cs" />
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Lexer\LexerEngine.cs" />

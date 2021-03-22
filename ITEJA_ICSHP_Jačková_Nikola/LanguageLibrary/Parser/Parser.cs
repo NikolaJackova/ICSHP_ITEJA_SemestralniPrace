@@ -114,6 +114,7 @@ namespace LanguageLibrary.Parser
             IdentExpression identifier = new IdentExpression(CurrentToken.Value);
             NextToken(TokenType.IDENTIFIER, "There should be ident token!");
             LinkedList<IExpression> parameters = GetParameters();
+            NextToken(TokenType.SEMICOLON, "There should be semicolon!");
             return new MethodStatement(identifier, parameters);
         }
 
@@ -137,7 +138,11 @@ namespace LanguageLibrary.Parser
                     NextToken(TokenType.QUOTE, "There should be quote token!");
                     paramList.AddLast(expression);
                 }
+                if (CurrentToken.TokenType == TokenType.COMMA) {
+                    NextToken(TokenType.COMMA);
+                }
             }
+            NextToken(TokenType.R_ROUND_BRACKET, "There should be right round bracket!");
             return paramList;
         }
 

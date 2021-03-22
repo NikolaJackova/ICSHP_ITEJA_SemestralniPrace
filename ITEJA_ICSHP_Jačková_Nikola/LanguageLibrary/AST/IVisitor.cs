@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.AST
 {
+    /// <summary>
+    /// Interface for visitor pattern. More info: http://alumni.cs.ucr.edu/~lgao/teaching/visitor.html
+    /// </summary>
     public interface IVisitor
     {
         #region CONDITION

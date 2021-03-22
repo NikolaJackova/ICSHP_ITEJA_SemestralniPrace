@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Lexer.Tokens
 {
+    /// <summary>
+    /// Class representing token
+    /// </summary>
     public class Token
     {
         public string Value { get; set; }
