@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageLibrary.AST;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Expressions
 {
-    class UnaryExpression : Expression
+    public abstract class UnaryExpression : IExpression
     {
-        public Expression Expression { get; protected set; }
+        public IExpression Expression { get; protected set; }
         public string Operation { get; protected set; }
 
-        public UnaryExpression(Expression expr)
+        public UnaryExpression(IExpression expr)
         {
             Expression = expr;
         }
+
+        public abstract object Visit(IVisitor visitor);
     }
 }

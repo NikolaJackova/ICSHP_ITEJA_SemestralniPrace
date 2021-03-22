@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageLibrary.AST;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser
 {
-    class Program
+    public class Program : IASTItem
     {
-        public Block Block { get; private set; }
+        internal Block Block { get; set; }
 
-        public Program(Block block)
+        internal Program(Block block)
         {
             Block = block;
+        }
+
+        public object Visit(IVisitor visitor)
+        {
+            return visitor.Visit_Program(this);
         }
     }
 }

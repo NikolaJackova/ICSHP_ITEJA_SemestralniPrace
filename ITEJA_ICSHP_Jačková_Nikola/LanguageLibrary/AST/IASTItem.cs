@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLibrary.Parser.Expressions
+namespace LanguageLibrary.AST
 {
-    class Expression
+    public interface IASTItem
     {
+        object Visit(IVisitor visitor);
     }
 }

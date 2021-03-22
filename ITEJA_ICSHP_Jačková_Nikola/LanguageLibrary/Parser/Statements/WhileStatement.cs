@@ -1,4 +1,5 @@
-﻿using LanguageLibrary.Parser.Conditions;
+﻿using LanguageLibrary.AST;
+using LanguageLibrary.Parser.Conditions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +8,20 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    class WhileStatement : Statement
+    public class WhileStatement : IStatement
     {
         public Condition Condition { get; private set; }
-        public Block Block { get; private set; }
+        public LinkedList<Block> Blocks { get; private set; }
 
-        public WhileStatement(Block block, Condition cond)
+        public WhileStatement(LinkedList<Block> blocks, Condition cond)
         {
             Condition = cond;
-            Block = block;
+            Blocks = blocks;
+        }
+
+        public object Visit(IVisitor visitor)
+        {
+            return visitor.Visit_WhileStatement(this);
         }
     }
 }

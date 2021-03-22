@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Expressions
 {
-    public class StringExpression : IExpression
+    public class IdentExpression : IExpression
     {
-        public string Text { get; private set; }
+        public string Identifier { get; private set; }
 
-        public StringExpression(string text)
+        public IdentExpression(string ident)
         {
-            Text = text;
+            Identifier = ident;
         }
 
         public object Visit(IVisitor visitor)
         {
-            return visitor.Visit_StringExpression(this);
+            return visitor.Visit_IdentExpression(this);
         }
     }
 }

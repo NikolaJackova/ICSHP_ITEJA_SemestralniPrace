@@ -1,8 +1,8 @@
 BEGIN
-var a = 0;
-var hello12345;
+var a, hello12345;
+a = 0;
 if(1 < a){
-   for i, from 1 to 5, i = i+2 {
+   for i, from 1 to 5, i = i+2; {
       hello12345 = "Hello!";
       a = 1 * 2 + 3 / 5;
    }

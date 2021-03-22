@@ -1,4 +1,5 @@
-﻿using LanguageLibrary.Parser.Expressions;
+﻿using LanguageLibrary.AST;
+using LanguageLibrary.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,16 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Conditions
 {
-    class GreaterEqThanRel : Condition
+    public class GreaterEqThanRel : BinaryRelCondition
     {
-        public GreaterEqThanRel(Expression left, Expression right) :base(left, right)
+        public GreaterEqThanRel(IExpression left, IExpression right) :base(left, right)
         {
             Operation = ">=";
+        }
+
+        public override object Visit(IVisitor visitor)
+        {
+            return visitor.Visit_GreaterEqThanRel(this);
         }
     }
 }

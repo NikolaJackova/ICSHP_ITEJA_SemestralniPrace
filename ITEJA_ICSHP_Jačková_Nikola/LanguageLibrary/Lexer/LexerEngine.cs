@@ -40,7 +40,11 @@ namespace LanguageLibrary.Lexer
                 }
                 else if (CurrentChar == '\"')
                 {
+                    tokens.AddLast(new Token(CurrentChar.ToString(), TokenType.QUOTE));
+                    NextChar();
                     tokens.AddLast(GetStringToken());
+                    tokens.AddLast(new Token(CurrentChar.ToString(), TokenType.QUOTE));
+                    NextChar();
                     continue;
                 }
                 else if (char.IsWhiteSpace(CurrentChar))
@@ -82,13 +86,12 @@ namespace LanguageLibrary.Lexer
         private Token GetStringToken()
         {
             string @string = "";
-            bool nextChar = NextChar();
+            bool nextChar = true;
             while (nextChar && CurrentChar != '\"')
             {
                 @string += CurrentChar;
                 nextChar = NextChar();
             }
-            NextChar();
             return new Token(@string, TokenType.STRING);
 
         }
@@ -115,6 +118,16 @@ namespace LanguageLibrary.Lexer
             {
                 number += CurrentChar;
                 nextChar = NextChar();
+            }
+            if (CurrentChar == '.')
+            {
+                number += CurrentChar;
+                nextChar = NextChar();
+                while (nextChar && char.IsDigit(CurrentChar))
+                {
+                    number += CurrentChar;
+                    nextChar = NextChar();
+                }
             }
             return new Token(number, TokenType.NUMBER);
         }

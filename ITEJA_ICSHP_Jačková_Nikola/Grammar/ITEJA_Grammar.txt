@@ -1,13 +1,12 @@
 program = "BEGIN" block "END.";
 
-block = {statement};
+block = {"var" ident {"," ident} ";"} {statement};
 
 statement = "if" "(" condition ")" "{" {block} "}" ["else" "{" {block} "}"]
 	| "while" "(" condition ")" "{" {block} "}"
-	| "var" ident {"," ident} ";"
-	| ["var"] ident "=" (expression | string) ";"
-	| "method" method "(" [parameter {"," parameter}] ")" ";"
-	| "for" ident "," "from" expression "to" expression ["," ident "=" expression]"{" {block} "}";
+	| ident "=" (expression | string) ";"
+	| "method" ident "(" [parameter {"," parameter}] ")" ";"
+	| "for" ident "," "from" expression "to" expression "," ident "=" expression ";" "{" {block} "}";
 
 condition = expression [("!=" | "==" | "<" | "<=" | ">" | ">=") expression];
 
@@ -17,12 +16,14 @@ term = factor {("*"|"/") factor};
 
 factor = ident | number | "(" expression ")";
 
-ident = /[a-zA-Z][a-zA-Z0-9]+/;
+ident = /[a-zA-Z][a-zA-Z0-9]*/;
 
-number = /[0-9]+/;
+number = (double | integer);
+
+integer = /[0-9]+/;
+
+double = /[0-9]+.[0-9]+/;
 
 string = /\"(.*?)\"/;
- 
-method = /[a-zA-Z]+/;
 
 parameter = expression | ident | string;

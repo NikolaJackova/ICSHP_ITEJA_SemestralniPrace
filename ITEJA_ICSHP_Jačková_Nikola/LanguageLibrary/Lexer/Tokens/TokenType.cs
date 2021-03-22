@@ -23,6 +23,7 @@ namespace LanguageLibrary.Lexer.Tokens
         DOT,
         SEMICOLON,
         COMMA,
+        QUOTE,
 
         PLUS,
         MINUS,

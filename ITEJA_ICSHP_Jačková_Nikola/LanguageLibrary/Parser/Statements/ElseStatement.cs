@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageLibrary.AST;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    class ElseStatement : Statement
+    public class ElseStatement : IStatement
     {
-        public Block Block { get; private set; }
-        public ElseStatement(Block block)
+        public LinkedList<Block> Blocks { get; private set; }
+        public ElseStatement(LinkedList<Block> blocks)
         {
-            Block = block;
+            Blocks = blocks;
+        }
+
+        public object Visit(IVisitor visitor)
+        {
+            return visitor.Visit_ElseStatement(this);
         }
     }
 }

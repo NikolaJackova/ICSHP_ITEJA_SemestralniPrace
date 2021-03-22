@@ -1,4 +1,5 @@
-﻿using LanguageLibrary.Parser.Expressions;
+﻿using LanguageLibrary.AST;
+using LanguageLibrary.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +8,14 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Conditions
 {
-    class Condition
+    public abstract class Condition : IASTItem
     {
-        public Expression Left { get; private set; }
-        public Expression Right { get; private set; }
-        public string Operation { get; protected set; }
+        public IExpression Left { get; private set; }
 
-        public Condition(Expression expression) {
+        public Condition(IExpression expression) {
             Left = expression;
         }
 
-        public Condition(Expression left, Expression right)
-        {
-            Left = left;
-            Right = right;
-        }
+        public abstract object Visit(IVisitor visitor);
     }
 }
