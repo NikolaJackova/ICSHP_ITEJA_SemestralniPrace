@@ -21,7 +21,7 @@ namespace LanguageLibrary.Parser
 
         public object Accept(IVisitor visitor)
         {
-            throw new NotImplementedException();
+            return visitor.Visit_Block(this);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace LanguageLibrary.Parser.Variables
 {
     public class Variable : IASTItem
     {
-        private IdentExpression Var { get; set; }
+        public IdentExpression Var { get; private set; }
 
         public Variable(IdentExpression variable)
         {

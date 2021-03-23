@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser
 {
+    /// <summary>
+    /// Interface that implements each of the nodes of AST
+    /// </summary>
     public interface IASTItem
     {
         object Accept(IVisitor visitor);

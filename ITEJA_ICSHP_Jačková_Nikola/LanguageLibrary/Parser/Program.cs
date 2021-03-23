@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser
 {
+    /// <summary>
+    /// Root node of AST
+    /// </summary>
     public class Program : IASTItem
     {
         internal Block Block { get; set; }

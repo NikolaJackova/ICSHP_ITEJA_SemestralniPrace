@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\InterpretException.cs" />
+    <Compile Include="Exceptions\LexerException.cs" />
+    <Compile Include="Exceptions\ParserException.cs" />
     <Compile Include="Parser\IASTItem.cs" />
     <Compile Include="Parser\IVisitor.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
-    <Compile Include="LanguageException.cs" />
+    <Compile Include="Exceptions\LanguageException.cs" />
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Lexer\LexerEngine.cs" />
     <Compile Include="Lexer\Tokens\Token.cs" />

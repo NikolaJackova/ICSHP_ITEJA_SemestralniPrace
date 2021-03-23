@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace LanguageLibrary.Parser
 {
     /// <summary>
-    /// Interface for visitor pattern. 
+    /// Interface for visitor pattern
     /// Sources: http://alumni.cs.ucr.edu/~lgao/teaching/visitor.html
     ///          https://refactoring.guru/design-patterns/visitor
     /// </summary>

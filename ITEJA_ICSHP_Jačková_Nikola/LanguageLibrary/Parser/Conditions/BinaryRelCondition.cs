@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Conditions
 {
+    /// <summary>
+    /// Abstract class for binary relation conditions
+    /// </summary>
     public abstract class BinaryRelCondition : Condition
     {
         public Expression Right { get; private set; }

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Conditions
 {
+    /// <summary>
+    /// Abstract class for conditions
+    /// </summary>
     public abstract class Condition : IASTItem
     {
         public Expression Left { get; private set; }

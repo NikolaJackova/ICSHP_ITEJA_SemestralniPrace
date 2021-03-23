@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LanguageLibrary;
+using LanguageLibrary.Exceptions;
 using LanguageLibrary.Lexer.Tokens;
 using LanguageLibrary.Parser.Conditions;
 using LanguageLibrary.Parser.Expressions;
@@ -22,7 +23,10 @@ namespace LanguageLibrary.Parser
             Lexer = lexer;
             CurrentToken = Lexer.GetNextToken();
         }
-
+        /// <summary>
+        /// Method for parsing stream of tokens from Lexer
+        /// </summary>
+        /// <returns>Program as a root node</returns>
         public Program Parse()
         {
             Program program = GetProgram();
@@ -53,12 +57,11 @@ namespace LanguageLibrary.Parser
             LinkedList<Variable> declarations = new LinkedList<Variable>();
             if (CurrentToken.TokenType == TokenType.VAR)
             {
-                NextToken(TokenType.VAR, "There should be var token!");
+                NextToken(TokenType.VAR);
                 while (true)
                 {
-                    Token token = CurrentToken;
+                    Variable variable = new Variable(new IdentExpression(CurrentToken.Value));
                     NextToken(TokenType.IDENTIFIER, "There should be ident token!");
-                    Variable variable = new Variable(new IdentExpression(token.Value));
                     declarations.AddLast(variable);
                     if (CurrentToken.TokenType == TokenType.COMMA)
                     {
@@ -71,7 +74,7 @@ namespace LanguageLibrary.Parser
                     }
                     else
                     {
-                        throw new LanguageException("Invalid token in declaration!");
+                        throw new ParserException("Invalid token in declaration!\nToken: " + CurrentToken.ToString() + ".");
                     }
                 }
             }
@@ -112,12 +115,12 @@ namespace LanguageLibrary.Parser
                 case TokenType.VAR:
                     return null;
             }
-            throw new LanguageException("Statement does not return value!");
+            throw new ParserException("Statement does not return value!\nToken: " + CurrentToken.ToString() + ".");
         }
 
         private Statement GetMethodStatement()
         {
-            NextToken(TokenType.METHOD, "There should be method token!");
+            NextToken(TokenType.METHOD);
             IdentExpression identifier = new IdentExpression(CurrentToken.Value);
             NextToken(TokenType.IDENTIFIER, "There should be ident token!");
             LinkedList<Expression> parameters = GetParameters();
@@ -139,7 +142,7 @@ namespace LanguageLibrary.Parser
                 }
                 else if (TokenType.QUOTE == CurrentToken.TokenType)
                 {
-                    NextToken(TokenType.QUOTE, "There should be quote token!");
+                    NextToken(TokenType.QUOTE);
                     Expression expression = new StringExpression(CurrentToken.Value);
                     NextToken(TokenType.STRING);
                     NextToken(TokenType.QUOTE, "There should be quote token!");
@@ -166,19 +169,19 @@ namespace LanguageLibrary.Parser
             }
             else if (TokenType.QUOTE == CurrentToken.TokenType)
             {
-                NextToken(TokenType.QUOTE, "There should be quote token!");
+                NextToken(TokenType.QUOTE);
                 Expression expression = new StringExpression(CurrentToken.Value);
                 NextToken(TokenType.STRING);
                 NextToken(TokenType.QUOTE, "There should be quote token!");
                 NextToken(TokenType.SEMICOLON, "There should be semicolon token!");
                 return new SetStatement(identifier, expression);
             }
-            throw new LanguageException("Set statement does not return value!");
+            throw new ParserException("Set statement does not return value!\nToken: " + CurrentToken.ToString());
         }
 
         private Statement GetForStatement()
         {
-            NextToken(TokenType.FOR, "There should be for token!");
+            NextToken(TokenType.FOR);
             IdentExpression ident = new IdentExpression(CurrentToken.Value);
             NextToken(TokenType.IDENTIFIER, "There should be ident token!");
             NextToken(TokenType.COMMA, "There should be comma token!");
@@ -200,7 +203,7 @@ namespace LanguageLibrary.Parser
 
         private Statement GetWhileStatement()
         {
-            NextToken(TokenType.WHILE, "There should be while token!");
+            NextToken(TokenType.WHILE);
             NextToken(TokenType.L_ROUND_BRACKET, "There should be left round bracket!");
             Condition condition = GetCondition();
             NextToken(TokenType.R_ROUND_BRACKET, "There should be right round bracket!");
@@ -216,7 +219,7 @@ namespace LanguageLibrary.Parser
 
         private Statement GetIfStatement()
         {
-            NextToken(TokenType.IF, "There should be if token!");
+            NextToken(TokenType.IF);
             NextToken(TokenType.L_ROUND_BRACKET, "There should be left round bracket!");
             Condition condition = GetCondition();
             NextToken(TokenType.R_ROUND_BRACKET, "There should be right round bracket!");
@@ -229,7 +232,7 @@ namespace LanguageLibrary.Parser
             NextToken(TokenType.R_CURLY_BRACKET, "There should be right curly bracket!");
             if (CurrentToken.TokenType == TokenType.ELSE)
             {
-                NextToken(TokenType.ELSE, "There should be else token!");
+                NextToken(TokenType.ELSE);
                 NextToken(TokenType.L_CURLY_BRACKET, "There should be left curly bracket!");
                 LinkedList<Block> elseBlocks = new LinkedList<Block>();
                 do
@@ -255,7 +258,7 @@ namespace LanguageLibrary.Parser
             {
                 return new OneStatementCondition(left);
             }
-            NextToken(tokenRel.TokenType, "");
+            NextToken(tokenRel.TokenType);
             switch (tokenRel.TokenType)
             {
                 case TokenType.EQUAL:
@@ -271,7 +274,7 @@ namespace LanguageLibrary.Parser
                 case TokenType.LESS_EQ_THEN:
                     return new LessEqThanRel(left, GetExpression());
             }
-            throw new LanguageException("Condition does not return a value!");
+            throw new ParserException("Condition does not return a value!\nToken: " + tokenRel.ToString() + ".");
         }
         private Expression GetExpression()
         {
@@ -280,12 +283,12 @@ namespace LanguageLibrary.Parser
             {
                 if (CurrentToken.TokenType == TokenType.PLUS)
                 {
-                    NextToken(TokenType.PLUS, "There should be plus token!");
+                    NextToken(TokenType.PLUS);
                     expression = new Plus(expression, GetTerm());
                 }
                 else if (CurrentToken.TokenType == TokenType.MINUS)
                 {
-                    NextToken(TokenType.MINUS, "There should be minus token!");
+                    NextToken(TokenType.MINUS);
                     expression = new Minus(expression, GetTerm());
                 }
             }
@@ -298,12 +301,12 @@ namespace LanguageLibrary.Parser
             {
                 if (CurrentToken.TokenType == TokenType.MULTIPLY)
                 {
-                    NextToken(TokenType.MULTIPLY, "There should be multiply token!");
+                    NextToken(TokenType.MULTIPLY);
                     expression = new Multiply(expression, GetFactor());
                 }
                 else if (CurrentToken.TokenType == TokenType.DIVIDE)
                 {
-                    NextToken(TokenType.DIVIDE, "There should be divide token!");
+                    NextToken(TokenType.DIVIDE);
                     expression = new Divide(expression, GetFactor());
                 }
             }
@@ -315,24 +318,24 @@ namespace LanguageLibrary.Parser
             switch (token.TokenType)
             {
                 case TokenType.NUMBER:
-                    NextToken(TokenType.NUMBER, "There should be number token!");
+                    NextToken(TokenType.NUMBER);
                     return new NumberExpression(int.Parse(token.Value));
                 case TokenType.IDENTIFIER:
-                    NextToken(TokenType.IDENTIFIER, "There should be identifier token!");
+                    NextToken(TokenType.IDENTIFIER);
                     return new IdentExpression(token.Value);
                 case TokenType.PLUS:
-                    NextToken(TokenType.PLUS, "There should be plus token!");
+                    NextToken(TokenType.PLUS);
                     return new PlusUnary(GetFactor());
                 case TokenType.MINUS:
-                    NextToken(TokenType.PLUS, "There should be minus token!");
+                    NextToken(TokenType.MINUS);
                     return new MinusUnary(GetFactor());
                 case TokenType.L_ROUND_BRACKET:
-                    NextToken(TokenType.L_ROUND_BRACKET, "There should be left round bracket!");
+                    NextToken(TokenType.L_ROUND_BRACKET);
                     Expression expression = GetExpression();
-                    NextToken(TokenType.R_ROUND_BRACKET, "There should be right round bracket!");
+                    NextToken(TokenType.R_ROUND_BRACKET);
                     return expression;
             }
-            throw new LanguageException("Factor does not return a value!");
+            throw new ParserException("Factor does not return a value!\nToken: " + token.ToString() + ".");
         }
 
         private void NextToken(TokenType type, string message)
@@ -343,7 +346,7 @@ namespace LanguageLibrary.Parser
             }
             else
             {
-                throw new LanguageException(message);
+                throw new ParserException(message + "\nToken: " + CurrentToken.ToString() + ".");
             }
         }
 
@@ -355,7 +358,7 @@ namespace LanguageLibrary.Parser
             }
             else
             {
-                throw new LanguageException("TokenType does not match!");
+                throw new ParserException("TokenType does not match!\nToken: " + CurrentToken.ToString() + ".");
             }
         }
     }

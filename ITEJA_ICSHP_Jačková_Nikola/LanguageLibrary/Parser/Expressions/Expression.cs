@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Expressions
 {
+    /// <summary>
+    /// Abstract class for expressions
+    /// </summary>
     public abstract class Expression : IASTItem
     {
         public abstract object Accept(IVisitor visitor);

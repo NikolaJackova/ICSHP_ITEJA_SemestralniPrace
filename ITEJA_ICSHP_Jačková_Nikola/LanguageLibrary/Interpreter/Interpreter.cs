@@ -1,4 +1,5 @@
-﻿using LanguageLibrary.Parser;
+﻿using LanguageLibrary.Exceptions;
+using LanguageLibrary.Parser;
 using LanguageLibrary.Parser.Conditions;
 using LanguageLibrary.Parser.Expressions;
 using LanguageLibrary.Parser.Statements;
@@ -14,29 +15,36 @@ namespace LanguageLibrary.Interpreter
     class Interpreter : IVisitor
     {
         public Parser.Parser Parser { get; private set; }
-
-        public Stack<ExecutionContext<IASTItem>> ExecutionContexts { get; private set; }
-
+        public Stack<ExecutionContext> ExecutionContexts { get; private set; }
         public Interpreter(Parser.Parser parser)
         {
             Parser = parser;
-            ExecutionContexts = new Stack<ExecutionContext<IASTItem>>();
+            ExecutionContexts = new Stack<ExecutionContext>();
         }
-
+        /// <summary>
+        /// Interprets AST from Parser
+        /// </summary>
         public void Interpret()
         {
-            ExecutionContexts.Push(new ExecutionContext<IASTItem>());
+            ExecutionContexts.Push(new ExecutionContext());
             Program program = Parser.Parse();
             program.Accept(this);
         }
         public object Visit_Block(Block block)
         {
-            throw new NotImplementedException();
-        }
-
-        public object Visit_ElseStatement(ElseStatement statement)
-        {
-            throw new NotImplementedException();
+            //Creating new execution context for block
+            ExecutionContexts.Push(new ExecutionContext());
+            foreach (var variable in block.Variables)
+            {
+                variable.Accept(this);
+            }
+            foreach (var statement in block.Statements)
+            {
+                statement.Accept(this);
+            }
+            //Removing block's execution contexts from stack
+            ExecutionContexts.Pop();
+            return null;
         }
 
         public object Visit_ForStatement(ForStatement statement)
@@ -44,32 +52,68 @@ namespace LanguageLibrary.Interpreter
             throw new NotImplementedException();
         }
 
-        public object Visit_IfStatement(IfStatement statement)
+        public object Visit_Program(Program program)
         {
-            if ((bool)statement.Condition.Accept(this)) {
-                foreach (var block in statement.Blocks)
+            return program.Block.Accept(this);
+        }
+
+        public object Visit_Variable(Variable variable)
+        {
+            foreach (var context in ExecutionContexts)
+            {
+                if (context.ExistsVariable(variable.Var.Identifier))
                 {
-                    block.Accept(this);
+                    throw new InterpretException("Variable: " + variable.Var.Identifier + " already exists!");
                 }
             }
+            ExecutionContext actualContext = ExecutionContexts.Peek();
+            actualContext.DeclareVariable(variable.Var.Identifier);
             return null;
         }
 
-        public object Visit_Program(Program program)
-        {
-            throw new NotImplementedException();
-        }
+        #region STATEMENT
         public object Visit_SetStatement(SetStatement statement)
         {
-            throw new NotImplementedException();
+            foreach (var context in ExecutionContexts)
+            {
+                if (context.ExistsVariable(statement.Identifier.Identifier))
+                {
+                    context.SetVariable(statement.Identifier.Identifier, statement.Expression.Accept(this));
+                    return null;
+                }
+            }
+            throw new InterpretException("Variable: " + statement.Identifier.Identifier + " was not declared!");
         }
-        public object Visit_Variable(Variable variable)
+        public object Visit_IfStatement(IfStatement statement)
         {
-            throw new NotImplementedException();
+            if ((bool)statement.Condition.Accept(this))
+            {
+                foreach (var block in statement.Blocks)
+                {
+                    block.Accept(this);
+                }
+            }
+            else
+            {
+                if (statement.ElseStatement != null)
+                {
+                    Visit_ElseStatement(statement.ElseStatement);
+                }
+            }
+            return null;
+        }
+        public object Visit_ElseStatement(ElseStatement statement)
+        {
+            foreach (var block in statement.Blocks)
+            {
+                block.Accept(this);
+            }
+            return null;
         }
         public object Visit_WhileStatement(WhileStatement statement)
         {
-            while ((bool)statement.Condition.Accept(this)) {
+            while ((bool)statement.Condition.Accept(this))
+            {
                 foreach (var block in statement.Blocks)
                 {
                     block.Accept(this);
@@ -77,6 +121,8 @@ namespace LanguageLibrary.Interpreter
             }
             return null;
         }
+        #endregion STATEMENT
+
         #region CONDITION
         public object Visit_GreaterEqThanRel(GreaterEqThanRel condition)
         {
@@ -111,7 +157,13 @@ namespace LanguageLibrary.Interpreter
         #region EXPRESSION
         public object Visit_IdentExpression(IdentExpression expression)
         {
-            return expression.Identifier;
+            foreach (var context in ExecutionContexts)
+            {
+                if (context.ExistsVariable(expression.Identifier)) {
+                    return context.GetVariable(expression.Identifier);
+                }
+            }
+            throw new InterpretException("Variable: " + expression.Identifier + " does not exists!");
         }
         public object Visit_StringExpression(StringExpression expression)
         {

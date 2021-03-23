@@ -1,4 +1,5 @@
-﻿using LanguageLibrary.Lexer.Tokens;
+﻿using LanguageLibrary.Exceptions;
+using LanguageLibrary.Lexer.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +85,7 @@ namespace LanguageLibrary.Lexer
                     break;
                 }
                 else {
-                    throw new LanguageException("Wrong character!");
+                    throw new LexerException("Invalid character: " + CurrentChar + "!");
                 }
             }
             return tokens;
@@ -174,7 +175,7 @@ namespace LanguageLibrary.Lexer
                 case '}':
                     return new Token("}", TokenType.R_CURLY_BRACKET);
             }
-            throw new LanguageException("Unknown one-symbol token!");
+            throw new LexerException("Unknown one-symbol token: " + CurrentChar + "!");
         }
 
         private Token GetTwoSymbolToken()
@@ -195,7 +196,7 @@ namespace LanguageLibrary.Lexer
             {
                 return new Token("!=", TokenType.NOT_EQUAL);
             }
-            throw new LanguageException("Unknown two-symbol token!");
+            throw new LexerException("Unknown two-symbol token: " + CurrentChar + "!");
         }
         #endregion Get Token Methods
         private char ShowNextChar()
