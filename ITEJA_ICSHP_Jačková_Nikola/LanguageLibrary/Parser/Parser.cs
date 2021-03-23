@@ -44,7 +44,7 @@ namespace LanguageLibrary.Parser
         private Block GetBlock()
         {
             LinkedList<Variable> declarations = GetDeclarations();
-            LinkedList<IStatement> statements = GetStatements();
+            LinkedList<Statement> statements = GetStatements();
             return new Block(statements, declarations);
         }
 
@@ -78,17 +78,24 @@ namespace LanguageLibrary.Parser
             return declarations;
         }
 
-        private LinkedList<IStatement> GetStatements()
+        private LinkedList<Statement> GetStatements()
         {
-            LinkedList<IStatement> statements = new LinkedList<IStatement>();
+            LinkedList<Statement> statements = new LinkedList<Statement>();
 
             while (CurrentToken.TokenType != TokenType.END && CurrentToken.TokenType != TokenType.R_CURLY_BRACKET)
             {
-                statements.AddLast(GetStatement());
+                Statement statement = GetStatement();
+                if (statement != null)
+                {
+                    statements.AddLast(statement);
+                } else
+                {
+                    break;
+                }
             }
             return statements;
         }
-        private IStatement GetStatement()
+        private Statement GetStatement()
         {
             switch (CurrentToken.TokenType)
             {
@@ -103,37 +110,37 @@ namespace LanguageLibrary.Parser
                 case TokenType.METHOD:
                     return GetMethodStatement();
                 case TokenType.VAR:
-                    throw new NotSupportedException("Not supported yet!");
+                    return null;
             }
             throw new LanguageException("Statement does not return value!");
         }
 
-        private IStatement GetMethodStatement()
+        private Statement GetMethodStatement()
         {
             NextToken(TokenType.METHOD, "There should be method token!");
             IdentExpression identifier = new IdentExpression(CurrentToken.Value);
             NextToken(TokenType.IDENTIFIER, "There should be ident token!");
-            LinkedList<IExpression> parameters = GetParameters();
+            LinkedList<Expression> parameters = GetParameters();
             NextToken(TokenType.SEMICOLON, "There should be semicolon!");
             return new MethodStatement(identifier, parameters);
         }
 
-        private LinkedList<IExpression> GetParameters()
+        private LinkedList<Expression> GetParameters()
         {
-            LinkedList<IExpression> paramList = new LinkedList<IExpression>();
+            LinkedList<Expression> paramList = new LinkedList<Expression>();
             NextToken(TokenType.L_ROUND_BRACKET, "There should be left round bracket!");
             while (CurrentToken.TokenType != TokenType.R_ROUND_BRACKET)
             {
                 if (TokenType.NUMBER == CurrentToken.TokenType || TokenType.IDENTIFIER == CurrentToken.TokenType || TokenType.L_ROUND_BRACKET == CurrentToken.TokenType)
                 {
-                    IExpression expression = GetExpression();
+                    Expression expression = GetExpression();
                     paramList.AddLast(expression);
                     
                 }
                 else if (TokenType.QUOTE == CurrentToken.TokenType)
                 {
                     NextToken(TokenType.QUOTE, "There should be quote token!");
-                    IExpression expression = new StringExpression(CurrentToken.Value);
+                    Expression expression = new StringExpression(CurrentToken.Value);
                     NextToken(TokenType.STRING);
                     NextToken(TokenType.QUOTE, "There should be quote token!");
                     paramList.AddLast(expression);
@@ -146,21 +153,21 @@ namespace LanguageLibrary.Parser
             return paramList;
         }
 
-        private IStatement GetSetStatement()
+        private Statement GetSetStatement()
         {
             IdentExpression identifier = new IdentExpression(CurrentToken.Value);
             NextToken(TokenType.IDENTIFIER, "There should be ident token!");
             NextToken(TokenType.ASSIGN, "There shold be assign token!");
             if (TokenType.NUMBER == CurrentToken.TokenType || TokenType.IDENTIFIER == CurrentToken.TokenType || TokenType.L_ROUND_BRACKET == CurrentToken.TokenType)
             {
-                IExpression expression = GetExpression();
+                Expression expression = GetExpression();
                 NextToken(TokenType.SEMICOLON, "There should be semicolon token!");
                 return new SetStatement(identifier, expression);
             }
             else if (TokenType.QUOTE == CurrentToken.TokenType)
             {
                 NextToken(TokenType.QUOTE, "There should be quote token!");
-                IExpression expression = new StringExpression(CurrentToken.Value);
+                Expression expression = new StringExpression(CurrentToken.Value);
                 NextToken(TokenType.STRING);
                 NextToken(TokenType.QUOTE, "There should be quote token!");
                 NextToken(TokenType.SEMICOLON, "There should be semicolon token!");
@@ -169,18 +176,18 @@ namespace LanguageLibrary.Parser
             throw new LanguageException("Set statement does not return value!");
         }
 
-        private IStatement GetForStatement()
+        private Statement GetForStatement()
         {
             NextToken(TokenType.FOR, "There should be for token!");
             IdentExpression ident = new IdentExpression(CurrentToken.Value);
             NextToken(TokenType.IDENTIFIER, "There should be ident token!");
             NextToken(TokenType.COMMA, "There should be comma token!");
             NextToken(TokenType.FROM, "There should be from token!");
-            IExpression from = GetExpression();
+            Expression from = GetExpression();
             NextToken(TokenType.TO, "There should be to token!");
-            IExpression to = GetExpression();
+            Expression to = GetExpression();
             NextToken(TokenType.COMMA, "There should be comma token!");
-            IStatement statement = GetSetStatement();
+            Statement statement = GetSetStatement();
             NextToken(TokenType.L_CURLY_BRACKET, "There should be left curly bracket!");
             LinkedList<Block> blocks = new LinkedList<Block>();
             do
@@ -191,7 +198,7 @@ namespace LanguageLibrary.Parser
             return new ForStatement(ident, from, to, statement, blocks);
         }
 
-        private IStatement GetWhileStatement()
+        private Statement GetWhileStatement()
         {
             NextToken(TokenType.WHILE, "There should be while token!");
             NextToken(TokenType.L_ROUND_BRACKET, "There should be left round bracket!");
@@ -207,7 +214,7 @@ namespace LanguageLibrary.Parser
             return new WhileStatement(blocks, condition);
         }
 
-        private IStatement GetIfStatement()
+        private Statement GetIfStatement()
         {
             NextToken(TokenType.IF, "There should be if token!");
             NextToken(TokenType.L_ROUND_BRACKET, "There should be left round bracket!");
@@ -241,7 +248,7 @@ namespace LanguageLibrary.Parser
 
         private Condition GetCondition()
         {
-            IExpression left = GetExpression();
+            Expression left = GetExpression();
             Token tokenRel = CurrentToken;
             if (tokenRel.TokenType != TokenType.EQUAL && tokenRel.TokenType != TokenType.NOT_EQUAL && tokenRel.TokenType != TokenType.GREATER_THEN
                 && tokenRel.TokenType != TokenType.GREATER_EQ_THEN && tokenRel.TokenType != TokenType.LESS_THEN && tokenRel.TokenType != TokenType.LESS_EQ_THEN)
@@ -266,9 +273,9 @@ namespace LanguageLibrary.Parser
             }
             throw new LanguageException("Condition does not return a value!");
         }
-        private IExpression GetExpression()
+        private Expression GetExpression()
         {
-            IExpression expression = GetTerm();
+            Expression expression = GetTerm();
             while (CurrentToken.TokenType == TokenType.PLUS || CurrentToken.TokenType == TokenType.MINUS)
             {
                 if (CurrentToken.TokenType == TokenType.PLUS)
@@ -284,9 +291,9 @@ namespace LanguageLibrary.Parser
             }
             return expression;
         }
-        private IExpression GetTerm()
+        private Expression GetTerm()
         {
-            IExpression expression = GetFactor();
+            Expression expression = GetFactor();
             while (CurrentToken.TokenType == TokenType.MULTIPLY || CurrentToken.TokenType == TokenType.DIVIDE)
             {
                 if (CurrentToken.TokenType == TokenType.MULTIPLY)
@@ -302,7 +309,7 @@ namespace LanguageLibrary.Parser
             }
             return expression;
         }
-        private IExpression GetFactor()
+        private Expression GetFactor()
         {
             Token token = CurrentToken;
             switch (token.TokenType)
@@ -321,7 +328,7 @@ namespace LanguageLibrary.Parser
                     return new MinusUnary(GetFactor());
                 case TokenType.L_ROUND_BRACKET:
                     NextToken(TokenType.L_ROUND_BRACKET, "There should be left round bracket!");
-                    IExpression expression = GetExpression();
+                    Expression expression = GetExpression();
                     NextToken(TokenType.R_ROUND_BRACKET, "There should be right round bracket!");
                     return expression;
             }

@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using LanguageLibrary.Parser.Expressions;
+﻿using LanguageLibrary.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +9,12 @@ namespace LanguageLibrary.Parser.Conditions
 {
     public abstract class Condition : IASTItem
     {
-        public IExpression Left { get; private set; }
+        public Expression Left { get; private set; }
 
-        public Condition(IExpression expression) {
+        public Condition(Expression expression) {
             Left = expression;
         }
 
-        public abstract object Visit(IVisitor visitor);
+        public abstract object Accept(IVisitor visitor);
     }
 }

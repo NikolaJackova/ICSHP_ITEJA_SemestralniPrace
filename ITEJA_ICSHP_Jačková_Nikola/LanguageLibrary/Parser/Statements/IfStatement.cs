@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using LanguageLibrary.Parser.Conditions;
+﻿using LanguageLibrary.Parser.Conditions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    public class IfStatement : IStatement
+    public class IfStatement : Statement
     {
         public Condition Condition { get; private set; }
 
@@ -29,7 +28,7 @@ namespace LanguageLibrary.Parser.Statements
             ElseStatement = elseStatement;
         }
 
-        public object Visit(IVisitor visitor)
+        public override object Accept(IVisitor visitor)
         {
             return visitor.Visit_IfStatement(this);
         }

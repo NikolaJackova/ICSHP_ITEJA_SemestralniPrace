@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +15,7 @@ namespace LanguageLibrary.Parser
             Block = block;
         }
 
-        public object Visit(IVisitor visitor)
+        public object Accept(IVisitor visitor)
         {
             return visitor.Visit_Program(this);
         }

@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using LanguageLibrary.Parser.Expressions;
+﻿using LanguageLibrary.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,7 @@ namespace LanguageLibrary.Parser.Variables
             Var = variable;
         }
 
-        public object Visit(IVisitor visitor)
+        public object Accept(IVisitor visitor)
         {
             return visitor.Visit_Variable(this);
         }

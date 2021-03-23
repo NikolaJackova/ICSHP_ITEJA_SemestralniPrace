@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +8,12 @@ namespace LanguageLibrary.Parser.Expressions
 {
     public class MinusUnary : UnaryExpression
     {
-        public MinusUnary(IExpression expr) : base(expr)
+        public MinusUnary(Expression expr) : base(expr)
         {
             Operation = "-";
         }
 
-        public override object Visit(IVisitor visitor)
+        public override object Accept(IVisitor visitor)
         {
             return visitor.Visit_MinusUnary(this);
         }

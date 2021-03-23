@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using LanguageLibrary.Parser.Expressions;
+﻿using LanguageLibrary.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +7,18 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    public class MethodStatement : IStatement
+    public class MethodStatement : Statement
     {
         public IdentExpression Identifier { get; private set; }
 
-        public LinkedList<IExpression> Parameters { get; private set; }
+        public LinkedList<Expression> Parameters { get; private set; }
 
-        public MethodStatement(IdentExpression ident, LinkedList<IExpression> parameters)
+        public MethodStatement(IdentExpression ident, LinkedList<Expression> parameters)
         {
             Identifier = ident;
             Parameters = parameters;
         }
-
-        public object Visit(IVisitor visitor)
+        public override object Accept(IVisitor visitor)
         {
             throw new NotImplementedException();
         }

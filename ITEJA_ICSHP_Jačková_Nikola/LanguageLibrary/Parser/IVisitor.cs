@@ -9,10 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLibrary.AST
+namespace LanguageLibrary.Parser
 {
     /// <summary>
-    /// Interface for visitor pattern. More info: http://alumni.cs.ucr.edu/~lgao/teaching/visitor.html
+    /// Interface for visitor pattern. 
+    /// Sources: http://alumni.cs.ucr.edu/~lgao/teaching/visitor.html
+    ///          https://refactoring.guru/design-patterns/visitor
     /// </summary>
     public interface IVisitor
     {
@@ -24,7 +26,7 @@ namespace LanguageLibrary.AST
         object Visit_LessThanRel(LessThanRel condition);
         object Visit_NotEqualRel(NotEqualRel condition);
         object Visit_OneStatement(OneStatementCondition condition);
-        #endregion
+        #endregion CONDITION
 
         #region EXPRESSION
         object Visit_Divide(Divide expression);
@@ -36,7 +38,7 @@ namespace LanguageLibrary.AST
         object Visit_MinusUnary(MinusUnary expression);
         object Visit_StringExpression(StringExpression expression);
         object Visit_IdentExpression(IdentExpression expression);
-        #endregion
+        #endregion EXPRESSION
 
         #region STATEMENT
         object Visit_ElseStatement(ElseStatement statement);
@@ -44,7 +46,7 @@ namespace LanguageLibrary.AST
         object Visit_ForStatement(ForStatement statement);
         object Visit_SetStatement(SetStatement statement);
         object Visit_WhileStatement(WhileStatement statement);
-        #endregion
+        #endregion STATEMENT
 
         object Visit_Block(Block block);
         object Visit_Variable(Variable variable);

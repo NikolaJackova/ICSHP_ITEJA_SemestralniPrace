@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using LanguageLibrary.Parser.Statements;
+﻿using LanguageLibrary.Parser.Statements;
 using LanguageLibrary.Parser.Variables;
 using System;
 using System.Collections.Generic;
@@ -11,16 +10,16 @@ namespace LanguageLibrary.Parser
 {
     public class Block : IASTItem
     {
-        public LinkedList<IStatement> Statements { get; private set; }
+        public LinkedList<Statement> Statements { get; private set; }
 
         public LinkedList<Variable> Variables { get; private set; }
-        public Block(LinkedList<IStatement> statements, LinkedList<Variable> variables)
+        public Block(LinkedList<Statement> statements, LinkedList<Variable> variables)
         {
             Statements = statements;
             Variables = variables;
         }
 
-        public object Visit(IVisitor visitor)
+        public object Accept(IVisitor visitor)
         {
             throw new NotImplementedException();
         }

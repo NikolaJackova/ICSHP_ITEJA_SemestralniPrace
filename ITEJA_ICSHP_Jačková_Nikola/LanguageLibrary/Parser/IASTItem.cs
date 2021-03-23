@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLibrary.AST
+namespace LanguageLibrary.Parser
 {
     public interface IASTItem
     {
-        object Visit(IVisitor visitor);
+        object Accept(IVisitor visitor);
     }
 }

@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Expressions
 {
-    public class NumberExpression : IExpression
+    public class NumberExpression : Expression
     {
         public double Value { get; private set; }
 
@@ -15,7 +14,7 @@ namespace LanguageLibrary.Parser.Expressions
             Value = number;
         }
 
-        public object Visit(IVisitor visitor)
+        public override object Accept(IVisitor visitor)
         {
             return visitor.Visit_NumberExpression(this);
         }

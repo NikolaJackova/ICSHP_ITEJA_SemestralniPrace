@@ -9,12 +9,14 @@ namespace LanguageLibrary.Parser.Conditions
 {
     public abstract class BinaryRelCondition : Condition
     {
-        public IExpression Right { get; private set; }
+        public Expression Right { get; private set; }
         public string Operation { get; protected set; }
 
-        public BinaryRelCondition(IExpression left, IExpression right) :base(left)
+        public BinaryRelCondition(Expression left, Expression right) :base(left)
         {
             Right = right;
         }
+
+        public abstract override object Accept(IVisitor visitor);
     }
 }

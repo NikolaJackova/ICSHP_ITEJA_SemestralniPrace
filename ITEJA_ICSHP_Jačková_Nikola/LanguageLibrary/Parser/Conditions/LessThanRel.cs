@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using LanguageLibrary.Parser.Expressions;
+﻿using LanguageLibrary.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +9,12 @@ namespace LanguageLibrary.Parser.Conditions
 {
     public class LessThanRel : BinaryRelCondition
     {
-        public LessThanRel(IExpression left, IExpression right) : base(left, right)
+        public LessThanRel(Expression left, Expression right) : base(left, right)
         {
             Operation = "<";
         }
 
-        public override object Visit(IVisitor visitor)
+        public override object Accept(IVisitor visitor)
         {
             return visitor.Visit_LessThanRel(this);
         }

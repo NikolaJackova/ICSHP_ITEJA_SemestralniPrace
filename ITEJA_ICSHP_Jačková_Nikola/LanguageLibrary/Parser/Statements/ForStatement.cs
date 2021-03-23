@@ -1,5 +1,4 @@
-﻿using LanguageLibrary.AST;
-using LanguageLibrary.Parser.Expressions;
+﻿using LanguageLibrary.Parser.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    public class ForStatement : IStatement
+    public class ForStatement : Statement
     {
         public IdentExpression Identifier { get; private set; }
-        public IExpression From { get; private set; }
-        public IExpression To { get; private set; }
-        public IStatement Statement { get; private set; }
+        public Expression From { get; private set; }
+        public Expression To { get; private set; }
+        public Statement Statement { get; private set; }
         public LinkedList<Block> Blocks { get; private set; }
-        public ForStatement(IdentExpression ident, IExpression from, IExpression to, IStatement statement, LinkedList<Block> blocks)
+        public ForStatement(IdentExpression ident, Expression from, Expression to, Statement statement, LinkedList<Block> blocks)
         {
             Identifier = ident;
             From = from;
@@ -24,7 +23,7 @@ namespace LanguageLibrary.Parser.Statements
             Blocks = blocks;
         }
 
-        public object Visit(IVisitor visitor)
+        public override object Accept(IVisitor visitor)
         {
             return visitor.Visit_ForStatement(this);
         }

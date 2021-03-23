@@ -43,8 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AST\IASTItem.cs" />
-    <Compile Include="AST\IVisitor.cs" />
+    <Compile Include="Parser\IASTItem.cs" />
+    <Compile Include="Parser\IVisitor.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
     <Compile Include="LanguageException.cs" />
     <Compile Include="Lexer\Lexer.cs" />
@@ -61,10 +61,11 @@
     <Compile Include="Parser\Conditions\LessThanRel.cs" />
     <Compile Include="Parser\Conditions\NotEqualRel.cs" />
     <Compile Include="Parser\Conditions\OneStatementCondition.cs" />
+    <Compile Include="Interpreter\ExecutionContext.cs" />
     <Compile Include="Parser\Expressions\BinaryExpression.cs" />
     <Compile Include="Parser\Expressions\Divide.cs" />
     <Compile Include="Parser\Expressions\IdentExpression.cs" />
-    <Compile Include="Parser\Expressions\IExpression.cs" />
+    <Compile Include="Parser\Expressions\Expression.cs" />
     <Compile Include="Parser\Expressions\Minus.cs" />
     <Compile Include="Parser\Expressions\MinusUnary.cs" />
     <Compile Include="Parser\Expressions\Multiply.cs" />
@@ -80,9 +81,8 @@
     <Compile Include="Parser\Statements\IfStatement.cs" />
     <Compile Include="Parser\Statements\MethodStatement.cs" />
     <Compile Include="Parser\Statements\SetStatement.cs" />
-    <Compile Include="Parser\Statements\IStatement.cs" />
+    <Compile Include="Parser\Statements\Statement.cs" />
     <Compile Include="Parser\Statements\WhileStatement.cs" />
-    <Compile Include="Parser\Variables\ExecutionContext.cs" />
     <Compile Include="Parser\Variables\Variable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
