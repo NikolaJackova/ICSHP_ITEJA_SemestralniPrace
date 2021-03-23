@@ -20,7 +20,7 @@ namespace LanguageLibrary.Parser.Statements
 
         public override object Accept(IVisitor visitor)
         {
-            return visitor.Visit_WhileStatement(this);
+            return visitor.VisitWhileStatement(this);
         }
     }
 }

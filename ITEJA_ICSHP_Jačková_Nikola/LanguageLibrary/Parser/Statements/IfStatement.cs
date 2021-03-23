@@ -30,7 +30,7 @@ namespace LanguageLibrary.Parser.Statements
 
         public override object Accept(IVisitor visitor)
         {
-            return visitor.Visit_IfStatement(this);
+            return visitor.VisitIfStatement(this);
         }
     }
 }

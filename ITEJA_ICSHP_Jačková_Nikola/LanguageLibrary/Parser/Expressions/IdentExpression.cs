@@ -17,7 +17,7 @@ namespace LanguageLibrary.Parser.Expressions
 
         public override object Accept(IVisitor visitor)
         {
-            return visitor.Visit_IdentExpression(this);
+            return visitor.VisitIdentExpression(this);
         }
     }
 }

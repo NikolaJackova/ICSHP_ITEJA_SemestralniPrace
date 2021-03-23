@@ -16,7 +16,7 @@ namespace LanguageLibrary.Parser.Conditions
 
         public override object Accept(IVisitor visitor)
         {
-            return visitor.Visit_GreaterThanRel(this);
+            return visitor.VisitGreaterThanRel(this);
         }
     }
 }

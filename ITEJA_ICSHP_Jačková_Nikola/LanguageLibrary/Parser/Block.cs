@@ -21,7 +21,7 @@ namespace LanguageLibrary.Parser
 
         public object Accept(IVisitor visitor)
         {
-            return visitor.Visit_Block(this);
+            return visitor.VisitBlock(this);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace LanguageLibrary.Parser
 
         public object Accept(IVisitor visitor)
         {
-            return visitor.Visit_Program(this);
+            return visitor.VisitProgram(this);
         }
     }
 }

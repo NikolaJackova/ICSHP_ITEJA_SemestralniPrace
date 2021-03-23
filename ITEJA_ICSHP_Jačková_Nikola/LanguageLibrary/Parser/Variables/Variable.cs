@@ -18,7 +18,7 @@ namespace LanguageLibrary.Parser.Variables
 
         public object Accept(IVisitor visitor)
         {
-            return visitor.Visit_Variable(this);
+            return visitor.VisitVariable(this);
         }
     }
 }

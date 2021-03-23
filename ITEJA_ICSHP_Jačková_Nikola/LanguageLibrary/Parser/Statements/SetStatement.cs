@@ -20,7 +20,7 @@ namespace LanguageLibrary.Parser.Statements
 
         public override object Accept(IVisitor visitor)
         {
-            return visitor.Visit_SetStatement(this);
+            return visitor.VisitSetStatement(this);
         }
     }
 }

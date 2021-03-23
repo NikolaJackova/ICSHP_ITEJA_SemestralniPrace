@@ -19,37 +19,37 @@ namespace LanguageLibrary.Parser
     public interface IVisitor
     {
         #region CONDITION
-        object Visit_EqualsRel(EqualsRel condition);
-        object Visit_GreaterEqThanRel(GreaterEqThanRel condition);
-        object Visit_GreaterThanRel(GreaterThanRel condition);
-        object Visit_LessEqThanRel(LessEqThanRel condition);
-        object Visit_LessThanRel(LessThanRel condition);
-        object Visit_NotEqualRel(NotEqualRel condition);
-        object Visit_OneStatement(OneStatementCondition condition);
+        object VisitEqualsRel(EqualsRel condition);
+        object VisitGreaterEqThanRel(GreaterEqThanRel condition);
+        object VisitGreaterThanRel(GreaterThanRel condition);
+        object VisitLessEqThanRel(LessEqThanRel condition);
+        object VisitLessThanRel(LessThanRel condition);
+        object VisitNotEqualRel(NotEqualRel condition);
+        object VisitOneStatement(OneStatementCondition condition);
         #endregion CONDITION
 
         #region EXPRESSION
-        object Visit_Divide(Divide expression);
-        object Visit_Minus(Minus expression);
-        object Visit_Plus(Plus expression);
-        object Visit_Multiply(Multiply expression);
-        object Visit_NumberExpression(NumberExpression expression);
-        object Visit_PlusUnary(PlusUnary expression);
-        object Visit_MinusUnary(MinusUnary expression);
-        object Visit_StringExpression(StringExpression expression);
-        object Visit_IdentExpression(IdentExpression expression);
+        object VisitDivide(Divide expression);
+        object VisitMinus(Minus expression);
+        object VisitPlus(Plus expression);
+        object VisitMultiply(Multiply expression);
+        object VisitNumberExpression(NumberExpression expression);
+        object VisitPlusUnary(PlusUnary expression);
+        object VisitMinusUnary(MinusUnary expression);
+        object VisitStringExpression(StringExpression expression);
+        object VisitIdentExpression(IdentExpression expression);
         #endregion EXPRESSION
 
         #region STATEMENT
-        object Visit_ElseStatement(ElseStatement statement);
-        object Visit_IfStatement(IfStatement statement);
-        object Visit_ForStatement(ForStatement statement);
-        object Visit_SetStatement(SetStatement statement);
-        object Visit_WhileStatement(WhileStatement statement);
+        object VisitElseStatement(ElseStatement statement);
+        object VisitIfStatement(IfStatement statement);
+        object VisitForStatement(ForStatement statement);
+        object VisitSetStatement(SetStatement statement);
+        object VisitWhileStatement(WhileStatement statement);
         #endregion STATEMENT
 
-        object Visit_Block(Block block);
-        object Visit_Variable(Variable variable);
-        object Visit_Program(Program program);
+        object VisitBlock(Block block);
+        object VisitVariable(Variable variable);
+        object VisitProgram(Program program);
     }
 }

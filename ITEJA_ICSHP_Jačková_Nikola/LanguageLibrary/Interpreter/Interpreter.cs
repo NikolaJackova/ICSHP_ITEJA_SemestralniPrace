@@ -30,7 +30,7 @@ namespace LanguageLibrary.Interpreter
             Program program = Parser.Parse();
             program.Accept(this);
         }
-        public object Visit_Block(Block block)
+        public object VisitBlock(Block block)
         {
             //Creating new execution context for block
             ExecutionContexts.Push(new ExecutionContext());
@@ -47,17 +47,17 @@ namespace LanguageLibrary.Interpreter
             return null;
         }
 
-        public object Visit_ForStatement(ForStatement statement)
+        public object VisitForStatement(ForStatement statement)
         {
             throw new NotImplementedException();
         }
 
-        public object Visit_Program(Program program)
+        public object VisitProgram(Program program)
         {
             return program.Block.Accept(this);
         }
 
-        public object Visit_Variable(Variable variable)
+        public object VisitVariable(Variable variable)
         {
             foreach (var context in ExecutionContexts)
             {
@@ -72,7 +72,7 @@ namespace LanguageLibrary.Interpreter
         }
 
         #region STATEMENT
-        public object Visit_SetStatement(SetStatement statement)
+        public object VisitSetStatement(SetStatement statement)
         {
             foreach (var context in ExecutionContexts)
             {
@@ -84,7 +84,7 @@ namespace LanguageLibrary.Interpreter
             }
             throw new InterpretException("Variable: " + statement.Identifier.Identifier + " was not declared!");
         }
-        public object Visit_IfStatement(IfStatement statement)
+        public object VisitIfStatement(IfStatement statement)
         {
             if ((bool)statement.Condition.Accept(this))
             {
@@ -97,12 +97,12 @@ namespace LanguageLibrary.Interpreter
             {
                 if (statement.ElseStatement != null)
                 {
-                    Visit_ElseStatement(statement.ElseStatement);
+                    VisitElseStatement(statement.ElseStatement);
                 }
             }
             return null;
         }
-        public object Visit_ElseStatement(ElseStatement statement)
+        public object VisitElseStatement(ElseStatement statement)
         {
             foreach (var block in statement.Blocks)
             {
@@ -110,7 +110,7 @@ namespace LanguageLibrary.Interpreter
             }
             return null;
         }
-        public object Visit_WhileStatement(WhileStatement statement)
+        public object VisitWhileStatement(WhileStatement statement)
         {
             while ((bool)statement.Condition.Accept(this))
             {
@@ -124,38 +124,38 @@ namespace LanguageLibrary.Interpreter
         #endregion STATEMENT
 
         #region CONDITION
-        public object Visit_GreaterEqThanRel(GreaterEqThanRel condition)
+        public object VisitGreaterEqThanRel(GreaterEqThanRel condition)
         {
             return (double)condition.Left.Accept(this) >= (double)condition.Right.Accept(this);
         }
-        public object Visit_GreaterThanRel(GreaterThanRel condition)
+        public object VisitGreaterThanRel(GreaterThanRel condition)
         {
             return (double)condition.Left.Accept(this) > (double)condition.Right.Accept(this);
         }
-        public object Visit_LessEqThanRel(LessEqThanRel condition)
+        public object VisitLessEqThanRel(LessEqThanRel condition)
         {
             return (double)condition.Left.Accept(this) <= (double)condition.Right.Accept(this);
         }
-        public object Visit_LessThanRel(LessThanRel condition)
+        public object VisitLessThanRel(LessThanRel condition)
         {
             return (double)condition.Left.Accept(this) < (double)condition.Right.Accept(this);
         }
-        public object Visit_EqualsRel(EqualsRel condition)
+        public object VisitEqualsRel(EqualsRel condition)
         {
             return (double)condition.Left.Accept(this) == (double)condition.Right.Accept(this);
         }
-        public object Visit_NotEqualRel(NotEqualRel condition)
+        public object VisitNotEqualRel(NotEqualRel condition)
         {
             return (double)condition.Left.Accept(this) != (double)condition.Right.Accept(this);
         }
-        public object Visit_OneStatement(OneStatementCondition condition)
+        public object VisitOneStatement(OneStatementCondition condition)
         {
             return condition.Left.Accept(this);
         }
         #endregion CONDITION
 
         #region EXPRESSION
-        public object Visit_IdentExpression(IdentExpression expression)
+        public object VisitIdentExpression(IdentExpression expression)
         {
             foreach (var context in ExecutionContexts)
             {
@@ -165,36 +165,36 @@ namespace LanguageLibrary.Interpreter
             }
             throw new InterpretException("Variable: " + expression.Identifier + " does not exists!");
         }
-        public object Visit_StringExpression(StringExpression expression)
+        public object VisitStringExpression(StringExpression expression)
         {
             return expression.Text;
         }
-        public object Visit_NumberExpression(NumberExpression expression)
+        public object VisitNumberExpression(NumberExpression expression)
         {
             return expression.Value;
         }
-        public object Visit_PlusUnary(PlusUnary expression)
+        public object VisitPlusUnary(PlusUnary expression)
         {
             return +(double)expression.Expression.Accept(this);
         }
-        public object Visit_MinusUnary(MinusUnary expression)
+        public object VisitMinusUnary(MinusUnary expression)
         {
             return -(double)expression.Expression.Accept(this);
         }
         #region BINARY_EXPRESSION
-        public object Visit_Plus(Plus expression)
+        public object VisitPlus(Plus expression)
         {
             return (double)expression.Left.Accept(this) + (double)expression.Right.Accept(this);
         }
-        public object Visit_Minus(Minus expression)
+        public object VisitMinus(Minus expression)
         {
             return (double)expression.Left.Accept(this) - (double)expression.Right.Accept(this);
         }
-        public object Visit_Multiply(Multiply expression)
+        public object VisitMultiply(Multiply expression)
         {
             return (double)expression.Left.Accept(this) * (double)expression.Right.Accept(this);
         }
-        public object Visit_Divide(Divide expression)
+        public object VisitDivide(Divide expression)
         {
             return (double)expression.Left.Accept(this) / (double)expression.Right.Accept(this);
         }
