@@ -1,3 +1,3 @@
-## Heading level 1
+## Semestrální práce z ICSHP a ITEJA
 
 Interpret pro fiktivní jazyk. 
