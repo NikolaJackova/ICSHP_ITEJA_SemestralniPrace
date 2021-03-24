@@ -46,6 +46,7 @@
     <Compile Include="Exceptions\InterpretException.cs" />
     <Compile Include="Exceptions\LexerException.cs" />
     <Compile Include="Exceptions\ParserException.cs" />
+    <Compile Include="Interpreter\InterpretEngine.cs" />
     <Compile Include="Parser\IASTItem.cs" />
     <Compile Include="Parser\IVisitor.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
