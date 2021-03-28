@@ -49,14 +49,39 @@ namespace LanguageLibrary.Interpreter
             ExecutionContexts.Pop();
             return null;
         }
-
+        public object VisitPrintMethod(PrintMethod method)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (var parameter in method.Parameters)
+            {
+                builder.Append(parameter.Accept(this));
+            }
+            Console.WriteLine(builder.ToString());
+            return builder.ToString();
+        }
         public object VisitForStatement(ForStatement statement)
         {
-            throw new NotImplementedException();
+            foreach (var context in ExecutionContexts)
+            {
+                if (context.ExistsVariable(statement.Identifier.Identifier))
+                {
+                    context.SetVariable(statement.Identifier.Identifier, statement.From.Accept(this));
+                }
+            }
+            for (int i = Convert.ToInt32(statement.From.Accept(this)); i <= Convert.ToInt32(statement.To.Accept(this)); i = Convert.ToInt32(VisitIdentExpression(statement.Statement.Identifier)))
+            {
+                foreach (var block in statement.Blocks)
+                {
+                    block.Accept(this);
+                }
+                statement.Statement.Accept(this);
+            }
+            return null;
         }
 
         public object VisitVariable(Variable variable)
         {
+            //TODO implement VariableType
             foreach (var context in ExecutionContexts)
             {
                 if (context.ExistsVariable(variable.Var.Identifier))

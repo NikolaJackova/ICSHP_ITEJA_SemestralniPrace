@@ -46,6 +46,7 @@ namespace LanguageLibrary.Parser
         object VisitForStatement(ForStatement statement);
         object VisitSetStatement(SetStatement statement);
         object VisitWhileStatement(WhileStatement statement);
+        object VisitPrintMethod(PrintMethod method);
         #endregion STATEMENT
 
         object VisitBlock(Block block);

@@ -21,8 +21,10 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             file = File.ReadAllText(file);
             Lexer lexer = new Lexer(file);
             Parser parser = new Parser(lexer);
-            LanguageLibrary.Parser.Program prog = parser.Parse();
-            Console.WriteLine(lexer.TokensToString());
+            //LanguageLibrary.Parser.Program prog = parser.Parse();
+            LanguageLibrary.Interpreter.Interpreter interpret = new LanguageLibrary.Interpreter.Interpreter(parser);
+            interpret.Interpret();
+            //Console.WriteLine(lexer.TokensToString());
             Console.Read();
         }
     }

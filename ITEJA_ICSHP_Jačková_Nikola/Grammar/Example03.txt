@@ -1,23 +1,23 @@
 BEGIN
-var a, hello12345;
+var a, hello12345, i;
 a = 0;
-if(1 < a){
-   for i, from 1 to 5, i = i+2; {
-      hello12345 = "Hello!";
-      a = 1 * 2 + 3 / 5;
+hello12345 = "Hello World!";
+if(a == 0){
+   for i, from 1 to 10, i = i+1; {
+      a = i;
+      method Print(a);
    }
 } else {
    hello12345 = "World!";
 }
 while(1 != a){
-      var b, c;
-      b = 0;
-      c = 1;	      
-      if (c > b){
-      	method Print(hello12345 + a, 5);
-	var a, b;
-	a = 0;
+      if(a == 5){
+      	method Print("If branch!");
+      } else {
+	method Print("Else branch!");	
       }
+      a = a - 1;
+      method Print(a);
 }
-method Print(hello12345 + a);
+method Print(hello12345, a);
 END.

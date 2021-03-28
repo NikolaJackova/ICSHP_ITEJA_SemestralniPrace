@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    public class MethodStatement : Statement
+    public abstract class MethodStatement : Statement
     {
         public IdentExpression Identifier { get; private set; }
 
@@ -17,10 +17,6 @@ namespace LanguageLibrary.Parser.Statements
         {
             Identifier = ident;
             Parameters = parameters;
-        }
-        public override object Accept(IVisitor visitor)
-        {
-            throw new NotImplementedException();
         }
     }
 }

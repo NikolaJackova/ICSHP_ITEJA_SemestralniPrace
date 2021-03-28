@@ -125,7 +125,15 @@ namespace LanguageLibrary.Parser
             NextToken(TokenType.IDENTIFIER, "There should be ident token!");
             LinkedList<Expression> parameters = GetParameters();
             NextToken(TokenType.SEMICOLON, "There should be semicolon!");
-            return new MethodStatement(identifier, parameters);
+            switch (identifier.Identifier)
+            {
+                case "Print":
+                    return new PrintMethod(parameters);
+                case "":
+                    break;
+            }
+            //return new MethodStatement(identifier, parameters);
+            return null;
         }
 
         private LinkedList<Expression> GetParameters()
@@ -190,7 +198,7 @@ namespace LanguageLibrary.Parser
             NextToken(TokenType.TO, "There should be to token!");
             Expression to = GetExpression();
             NextToken(TokenType.COMMA, "There should be comma token!");
-            Statement statement = GetSetStatement();
+            SetStatement statement = (SetStatement)GetSetStatement();
             NextToken(TokenType.L_CURLY_BRACKET, "There should be left curly bracket!");
             LinkedList<Block> blocks = new LinkedList<Block>();
             do

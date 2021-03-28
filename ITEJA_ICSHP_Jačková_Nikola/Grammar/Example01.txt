@@ -7,5 +7,6 @@ while (counter1 < 10){
       counter1 = counter1 + 5;
    }
    counter1 = counter1 + 1;
+   method Print(counter1, hello);
 }
 END.

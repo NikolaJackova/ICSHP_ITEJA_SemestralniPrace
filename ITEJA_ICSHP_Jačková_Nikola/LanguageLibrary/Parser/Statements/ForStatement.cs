@@ -12,9 +12,9 @@ namespace LanguageLibrary.Parser.Statements
         public IdentExpression Identifier { get; private set; }
         public Expression From { get; private set; }
         public Expression To { get; private set; }
-        public Statement Statement { get; private set; }
+        public SetStatement Statement { get; private set; }
         public LinkedList<Block> Blocks { get; private set; }
-        public ForStatement(IdentExpression ident, Expression from, Expression to, Statement statement, LinkedList<Block> blocks)
+        public ForStatement(IdentExpression ident, Expression from, Expression to, SetStatement statement, LinkedList<Block> blocks)
         {
             Identifier = ident;
             From = from;
