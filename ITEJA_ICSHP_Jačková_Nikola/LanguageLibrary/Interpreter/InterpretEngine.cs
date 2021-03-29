@@ -63,9 +63,9 @@ namespace LanguageLibrary.Interpreter
         {
             foreach (var context in ExecutionContexts)
             {
-                if (context.ExistsVariable(statement.Identifier.Identifier))
+                if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
                 {
-                    context.SetVariable(statement.Identifier.Identifier, statement.From.Accept(this));
+                    context.Vars.SetVariable(statement.Identifier.Identifier, statement.From.Accept(this));
                 }
             }
             for (int i = Convert.ToInt32(statement.From.Accept(this)); i <= Convert.ToInt32(statement.To.Accept(this)); i = Convert.ToInt32(VisitIdentExpression(statement.Statement.Identifier)))
@@ -84,13 +84,13 @@ namespace LanguageLibrary.Interpreter
             //TODO implement VariableType
             foreach (var context in ExecutionContexts)
             {
-                if (context.ExistsVariable(variable.Var.Identifier))
+                if (context.Vars.ExistsVariable(variable.Var.Identifier))
                 {
                     throw new InterpretException("Variable: " + variable.Var.Identifier + " already exists!");
                 }
             }
             ExecutionContext actualContext = ExecutionContexts.Peek();
-            actualContext.DeclareVariable(variable.Var.Identifier);
+            actualContext.Vars.DeclareVariable(variable.Var.Identifier);
             return null;
         }
 
@@ -99,9 +99,9 @@ namespace LanguageLibrary.Interpreter
         {
             foreach (var context in ExecutionContexts)
             {
-                if (context.ExistsVariable(statement.Identifier.Identifier))
+                if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
                 {
-                    context.SetVariable(statement.Identifier.Identifier, statement.Expression.Accept(this));
+                    context.Vars.SetVariable(statement.Identifier.Identifier, statement.Expression.Accept(this));
                     return null;
                 }
             }

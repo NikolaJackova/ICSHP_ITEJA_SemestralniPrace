@@ -37,6 +37,10 @@ namespace LanguageLibrary.Lexer
             }
             return null;
         }
+        public void ResetEnumerator()
+        {
+            Enumerator.Reset();
+        }
         /// <summary>
         /// Returns one string representing tokens in token list
         /// </summary>

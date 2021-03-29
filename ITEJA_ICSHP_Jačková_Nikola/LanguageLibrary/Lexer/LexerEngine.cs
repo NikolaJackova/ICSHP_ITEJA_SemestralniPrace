@@ -18,7 +18,7 @@ namespace LanguageLibrary.Lexer
         public string Source { get; set; }
         private IDictionary<string, TokenType> KeyWords { get; set; }
 
-        #region Public Methods
+        #region PUBLIC_METHODS
         /// <summary>
         /// Constructor which initialize LexerEngine
         /// </summary>
@@ -28,7 +28,10 @@ namespace LanguageLibrary.Lexer
             InitDictionary();
             Source = source;
             Position = 0;
-            CurrentChar = Source[Position];
+            if (source != string.Empty)
+            {
+                CurrentChar = Source[Position];
+            }
         }
         /// <summary>
         /// Loading tokens into LinkedList
@@ -90,10 +93,10 @@ namespace LanguageLibrary.Lexer
             }
             return tokens;
         }
-        #endregion Public Methods
+        #endregion PUBLIC_METHODS
 
-        #region Private Methods
-        #region Get Token Methods
+        #region PRIVATE_METHODS
+        #region GET_TOKEN_METHODS
         private Token GetStringToken()
         {
             string @string = "";
@@ -198,7 +201,7 @@ namespace LanguageLibrary.Lexer
             }
             throw new LexerException("Unknown two-symbol token: " + CurrentChar + "!");
         }
-        #endregion Get Token Methods
+        #endregion GET_TOKEN_METHODS
         private char ShowNextChar()
         {
             if (Position + 1 > Source.Length - 1)
@@ -230,6 +233,7 @@ namespace LanguageLibrary.Lexer
         {
             if (Position + 1 > Source.Length - 1)
             {
+                Position += 1;
                 return false;
             }
             Position += 1;
@@ -252,6 +256,6 @@ namespace LanguageLibrary.Lexer
                 {"to", TokenType.TO}
             };
         }
-        #endregion Private Methods
+        #endregion PRIVATE_METHODS
     }
 }

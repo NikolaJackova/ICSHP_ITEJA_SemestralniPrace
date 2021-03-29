@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeViewBuilder.cs" />
     <EmbeddedResource Include="InterpretGUI.resx">
       <DependentUpon>InterpretGUI.cs</DependentUpon>
     </EmbeddedResource>

@@ -22,7 +22,7 @@ namespace LanguageLibrary.Lexer.Tokens
         }
         public override string ToString()
         {
-            return "Token{type: " + TokenType + ", value: " + Value + "}";
+            return "Token {type: " + TokenType + ", value: " + Value + "}";
         }
     }
 }

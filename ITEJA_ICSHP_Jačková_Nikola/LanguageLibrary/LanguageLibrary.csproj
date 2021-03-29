@@ -47,6 +47,8 @@
     <Compile Include="Exceptions\LexerException.cs" />
     <Compile Include="Exceptions\ParserException.cs" />
     <Compile Include="Interpreter\InterpretEngine.cs" />
+    <Compile Include="Interpreter\Variables.cs" />
+    <Compile Include="Parser\Expressions\VarIdentExpression.cs" />
     <Compile Include="Parser\IASTItem.cs" />
     <Compile Include="Parser\IVisitor.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Parser\Expressions\StringExpression.cs" />
     <Compile Include="Parser\Expressions\UnaryExpression.cs" />
     <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\ParserEngine.cs" />
     <Compile Include="Parser\Program.cs" />
     <Compile Include="Parser\Statements\ElseStatement.cs" />
     <Compile Include="Parser\Statements\ForStatement.cs" />

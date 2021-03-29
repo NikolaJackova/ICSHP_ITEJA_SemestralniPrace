@@ -11,7 +11,7 @@ namespace LanguageLibrary.Parser
     /// </summary>
     public class Program : IASTItem
     {
-        internal Block Block { get; set; }
+        public Block Block { get; set; }
 
         internal Program(Block block)
         {

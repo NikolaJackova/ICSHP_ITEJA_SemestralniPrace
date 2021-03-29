@@ -15,8 +15,10 @@ namespace LanguageLibrary.Interpreter
     public class Interpreter
     {
         private InterpretEngine Engine { get; set; }
+        public Parser.Parser Parser { get; private set; }
         public Interpreter(Parser.Parser parser)
         {
+            Parser = parser;
             Engine = new InterpretEngine(parser);
             
         }
