@@ -4,20 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLibrary.Parser.Expressions
+namespace LanguageLibrary.Interpreter
 {
     public enum VarType
     {
         STRING,
         NUMBER
     }
-    public class VarIdentExpression : IdentExpression
+    public class Variable
     {
-        public Expression Expression { get; private set; }
+        public object Value { get; private set; }
         public VarType Type { get; private set; }
-        public VarIdentExpression(string ident, VarType type, Expression expression) : base(ident)
+        public Variable(VarType type, object value)
         {
-            Expression = expression;
+            Value = value;
             Type = type;
         }
     }

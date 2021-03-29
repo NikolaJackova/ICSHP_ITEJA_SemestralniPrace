@@ -12,8 +12,8 @@ namespace LanguageLibrary.Parser
     {
         public LinkedList<Statement> Statements { get; private set; }
 
-        public LinkedList<Variable> Variables { get; private set; }
-        public Block(LinkedList<Statement> statements, LinkedList<Variable> variables)
+        public LinkedList<VariableDeclaration> Variables { get; private set; }
+        public Block(LinkedList<Statement> statements, LinkedList<VariableDeclaration> variables)
         {
             Statements = statements;
             Variables = variables;

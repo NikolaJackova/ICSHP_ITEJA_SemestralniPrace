@@ -42,20 +42,20 @@ namespace LanguageLibrary.Parser
 
         private Block GetBlock()
         {
-            LinkedList<Variable> declarations = GetDeclarations();
+            LinkedList<VariableDeclaration> declarations = GetDeclarations();
             LinkedList<Statement> statements = GetStatements();
             return new Block(statements, declarations);
         }
 
-        private LinkedList<Variable> GetDeclarations()
+        private LinkedList<VariableDeclaration> GetDeclarations()
         {
-            LinkedList<Variable> declarations = new LinkedList<Variable>();
+            LinkedList<VariableDeclaration> declarations = new LinkedList<VariableDeclaration>();
             if (CurrentToken.TokenType == TokenType.VAR)
             {
                 NextToken(TokenType.VAR);
                 while (true)
                 {
-                    Variable variable = new Variable(new IdentExpression(CurrentToken.Value));
+                    VariableDeclaration variable = new VariableDeclaration(new IdentExpression(CurrentToken.Value));
                     NextToken(TokenType.IDENTIFIER, "There should be ident token!");
                     declarations.AddLast(variable);
                     if (CurrentToken.TokenType == TokenType.COMMA)

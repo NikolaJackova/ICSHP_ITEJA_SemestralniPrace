@@ -299,7 +299,7 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             return node;
         }
 
-        public object VisitVariable(Variable variable)
+        public object VisitVariable(VariableDeclaration variable)
         {
             TreeNode node = new TreeNode
             {

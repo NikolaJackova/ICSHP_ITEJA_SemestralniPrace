@@ -47,8 +47,8 @@
     <Compile Include="Exceptions\LexerException.cs" />
     <Compile Include="Exceptions\ParserException.cs" />
     <Compile Include="Interpreter\InterpretEngine.cs" />
+    <Compile Include="Interpreter\Variable.cs" />
     <Compile Include="Interpreter\Variables.cs" />
-    <Compile Include="Parser\Expressions\VarIdentExpression.cs" />
     <Compile Include="Parser\IASTItem.cs" />
     <Compile Include="Parser\IVisitor.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
@@ -91,7 +91,7 @@
     <Compile Include="Parser\Statements\SetStatement.cs" />
     <Compile Include="Parser\Statements\Statement.cs" />
     <Compile Include="Parser\Statements\WhileStatement.cs" />
-    <Compile Include="Parser\Variables\Variable.cs" />
+    <Compile Include="Parser\Variables\VariableDeclaration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

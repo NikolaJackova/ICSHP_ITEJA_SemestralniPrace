@@ -11,24 +11,21 @@ namespace LanguageLibrary.Interpreter
 {
     public class Variables
     {
-        public LinkedList<Variable> VariablesList { get; private set; }
-
-        public Dictionary<string, VarIdentExpression> VariablesMap { get; private set; }
+        public Dictionary<string, Variable> VariablesMap { get; private set; }
         public Variables()
         {
-            VariablesMap = new Dictionary<string, VarIdentExpression>();
-            VariablesList = new LinkedList<Variable>();
+            VariablesMap = new Dictionary<string, Variable>();
         }
-        public VarIdentExpression GetVariable(string key)
+        public object GetVariable(string key)
         {
-            if (VariablesMap.TryGetValue(key, out VarIdentExpression value))
+            if (VariablesMap.TryGetValue(key, out Variable value))
             {
-                return value;
+                return value.Value;
             }
             throw new LanguageException("Variable does not exists!");
         }
 
-        public void SetVariable(string key, VarIdentExpression value)
+        public void SetVariable(string key, Variable value)
         {
             VariablesMap[key] = value;
         }
@@ -41,6 +38,17 @@ namespace LanguageLibrary.Interpreter
         public bool ExistsVariable(string key)
         {
             return VariablesMap.ContainsKey(key);
+        }
+
+        public bool HasVariableValue(string key)
+        {
+            if (VariablesMap.ContainsKey(key))
+            {
+                if (VariablesMap[key] != null) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

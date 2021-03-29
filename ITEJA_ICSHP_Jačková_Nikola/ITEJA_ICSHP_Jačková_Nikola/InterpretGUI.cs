@@ -40,7 +40,7 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             {
                 return;
             }
-            leftTextBox.Clear();
+            editorTextBox.Clear();
             saveToolStripMenuItem1.Enabled = false;
         }
 
@@ -63,7 +63,7 @@ namespace ITEJA_ICSHP_Jačková_Nikola
                     fileContent = reader.ReadToEnd();
                 }
             }
-            leftTextBox.Text = fileContent;
+            editorTextBox.Text = fileContent;
             saveToolStripMenuItem1.Enabled = true;
         }
         private void SaveToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             if (FilePath != string.Empty)
             {
                 StreamWriter textWriter = new StreamWriter(FilePath);
-                textWriter.Write(leftTextBox.Text);
+                textWriter.Write(editorTextBox.Text);
                 textWriter.Close();
             }
         }
@@ -88,100 +88,106 @@ namespace ITEJA_ICSHP_Jačková_Nikola
                 if ((_ = saveDialog.OpenFile()) != null)
                 {
                     StreamWriter textWriter = new StreamWriter(saveDialog.FileName);
-                    textWriter.Write(leftTextBox.Text);
+                    textWriter.Write(editorTextBox.Text);
                     textWriter.Close();
                 }
             }
         }
         private void LoadExample01ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenExample("Example01.txt");
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example01.txt");
         }
         private void LoadExample02ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenExample("Example02.txt");
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example02.txt");
         }
         private void LoadExample03ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenExample("Example03.txt");
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example03.txt");
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        private void OpenExample(string fileName)
+        private string OpenFileFromRootProjectDirectory(string fileName)
         {
             var projectFolder = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).Parent.FullName;
-            var path = Path.Combine(projectFolder, @"Grammar\" + fileName);
-            leftTextBox.Text = File.ReadAllText(path);
+            var path = Path.Combine(projectFolder, fileName);
+            return File.ReadAllText(path);
         }
         #endregion FILE
+
         #region INTERPRET
         private void ShowTokensToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitializeInterpret(leftTextBox.Text);
-            rightTextBox.Text = Interpret.Parser.Lexer.TokensToString();
+            InitializeInterpret(editorTextBox.Text);
+            tokensTextBox.Text = Interpret.Parser.Lexer.TokensToString();
         }
         private void ShowASTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             treeViewAST.Nodes.Clear();
-            InitializeInterpret(leftTextBox.Text);
+            InitializeInterpret(editorTextBox.Text);
             TreeViewBuilder builder = new TreeViewBuilder(Interpret.Parser);
             builder.BuildTreeView(treeViewAST);
             treeViewAST.ExpandAll();
         }
         private void RunProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitializeInterpret(leftTextBox.Text);
+            InitializeInterpret(editorTextBox.Text);
             Interpret.Interpret();
         }
-        #endregion INTERPRET
-
-        #region EDIT
         private void InitializeInterpret(string source)
         {
+            if (editorTextBox.Text == string.Empty)
+            {
+                MessageBox.Show("There is no code for process!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             LanguageLibrary.Lexer.Lexer lexer = new LanguageLibrary.Lexer.Lexer(source);
             LanguageLibrary.Parser.Parser parser = new LanguageLibrary.Parser.Parser(lexer);
             Interpret = new LanguageLibrary.Interpreter.Interpreter(parser);
         }
+        #endregion INTERPRET
 
+        #region EDIT
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            leftTextBox.Undo();
+            editorTextBox.Undo();
         }
 
         private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            leftTextBox.Redo();
+            editorTextBox.Redo();
         }
 
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            leftTextBox.Cut();
+            editorTextBox.Cut();
         }
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            leftTextBox.Copy();
+            editorTextBox.Copy();
         }
 
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            leftTextBox.Paste();
+            editorTextBox.Paste();
         }
 
         private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            leftTextBox.SelectAll();
+            editorTextBox.SelectAll();
         }
         #endregion EDIT
+
         #region FONT
         private void FontToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             FontDialog fontDialog = new FontDialog();
             if (fontDialog.ShowDialog() == DialogResult.OK)
             {
-                leftTextBox.SelectionFont = fontDialog.Font;
+                editorTextBox.SelectionFont = fontDialog.Font;
             }
         }
 
@@ -190,9 +196,22 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             ColorDialog colorDialog = new ColorDialog();
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                leftTextBox.SelectionColor = colorDialog.Color;
+                editorTextBox.SelectionColor = colorDialog.Color;
             }
         }
         #endregion FONT
+
+        #region ABOUT
+        private void ViewGrammarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GrammarPopUp grammar = new GrammarPopUp(OpenFileFromRootProjectDirectory(@"Grammar\ITEJA_Grammar.txt"));
+            grammar.Show();
+        }
+
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This is a semestral work from ITEJA and ICSHP.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        #endregion ABOUT
     }
 }

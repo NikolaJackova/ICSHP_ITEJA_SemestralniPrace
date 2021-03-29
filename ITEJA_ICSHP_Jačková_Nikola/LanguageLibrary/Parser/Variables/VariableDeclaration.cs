@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Variables
 {
-    public class Variable : IASTItem
+    public class VariableDeclaration : IASTItem
     {
         public IdentExpression Var { get; private set; }
 
-        public Variable(IdentExpression variable)
+        public VariableDeclaration(IdentExpression variable)
         {
             Var = variable;
         }

@@ -65,7 +65,7 @@ namespace LanguageLibrary.Interpreter
             {
                 if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
                 {
-                    context.Vars.SetVariable(statement.Identifier.Identifier, statement.From.Accept(this));
+                    context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.NUMBER, statement.From.Accept(this)));
                 }
             }
             for (int i = Convert.ToInt32(statement.From.Accept(this)); i <= Convert.ToInt32(statement.To.Accept(this)); i = Convert.ToInt32(VisitIdentExpression(statement.Statement.Identifier)))
@@ -79,7 +79,7 @@ namespace LanguageLibrary.Interpreter
             return null;
         }
 
-        public object VisitVariable(Variable variable)
+        public object VisitVariable(VariableDeclaration variable)
         {
             //TODO implement VariableType
             foreach (var context in ExecutionContexts)
@@ -101,7 +101,13 @@ namespace LanguageLibrary.Interpreter
             {
                 if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
                 {
-                    context.Vars.SetVariable(statement.Identifier.Identifier, statement.Expression.Accept(this));
+                    if (statement.Expression.Accept(this) is string)
+                    {
+                        context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.STRING, statement.Expression.Accept(this)));
+                    } else if (statement.Expression.Accept(this) is double)
+                    {
+                        context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.NUMBER, statement.Expression.Accept(this)));
+                    }
                     return null;
                 }
             }
@@ -182,9 +188,9 @@ namespace LanguageLibrary.Interpreter
         {
             foreach (var context in ExecutionContexts)
             {
-                if (context.ExistsVariable(expression.Identifier))
+                if (context.Vars.ExistsVariable(expression.Identifier))
                 {
-                    return context.GetVariable(expression.Identifier);
+                    return context.Vars.GetVariable(expression.Identifier);
                 }
             }
             throw new InterpretException("Variable: " + expression.Identifier + " does not exists!");

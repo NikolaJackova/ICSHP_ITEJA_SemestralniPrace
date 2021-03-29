@@ -50,7 +50,7 @@ namespace LanguageLibrary.Parser
         #endregion STATEMENT
 
         object VisitBlock(Block block);
-        object VisitVariable(Variable variable);
+        object VisitVariable(VariableDeclaration variable);
         object VisitProgram(Program program);
     }
 }
