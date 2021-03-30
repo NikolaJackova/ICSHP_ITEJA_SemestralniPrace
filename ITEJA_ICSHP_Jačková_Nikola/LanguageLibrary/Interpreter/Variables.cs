@@ -16,20 +16,25 @@ namespace LanguageLibrary.Interpreter
         {
             VariablesMap = new Dictionary<string, Variable>();
         }
-        public object GetVariable(string key)
+        public Variable GetVariable(string key)
         {
             if (VariablesMap.TryGetValue(key, out Variable value))
             {
-                return value.Value;
+                return value;
             }
             throw new LanguageException("Variable does not exists!");
         }
 
         public void SetVariable(string key, Variable value)
         {
-            VariablesMap[key] = value;
+            if (VariablesMap.ContainsKey(key))
+            {
+                VariablesMap[key] = value;
+            } else
+            {
+                VariablesMap.Add(key, value);
+            }
         }
-
         public void DeclareVariable(string key)
         {
             VariablesMap[key] = default;

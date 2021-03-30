@@ -18,6 +18,8 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         public InterpretGUI()
         {
             InitializeComponent();
+            //For testing purposes
+            loadExample01ToolStripMenuItem.PerformClick();
         }
 
         #region FILE
@@ -40,8 +42,11 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             {
                 return;
             }
-            editorTextBox.Clear();
             saveToolStripMenuItem1.Enabled = false;
+            editorTextBox.Clear();
+            tokensTextBox.Clear();
+            treeViewAST.Nodes.Clear();
+            Interpret = null;
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -93,26 +98,32 @@ namespace ITEJA_ICSHP_Jačková_Nikola
                 }
             }
         }
-        private void LoadExample01ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenExample01ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example01.txt");
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example01.txt", out string path);
+            FilePath = path;
+            saveToolStripMenuItem1.Enabled = true;
         }
-        private void LoadExample02ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenExample02ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example02.txt");
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example02.txt", out string path);
+            FilePath = path;
+            saveToolStripMenuItem1.Enabled = true;
         }
-        private void LoadExample03ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenExample03ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example03.txt");
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example03.txt", out string path);
+            FilePath = path;
+            saveToolStripMenuItem1.Enabled = true;
         }
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        private string OpenFileFromRootProjectDirectory(string fileName)
+        private string OpenFileFromRootProjectDirectory(string fileName, out string path)
         {
             var projectFolder = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).Parent.FullName;
-            var path = Path.Combine(projectFolder, fileName);
+            path = Path.Combine(projectFolder, fileName);
             return File.ReadAllText(path);
         }
         #endregion FILE
@@ -120,21 +131,43 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         #region INTERPRET
         private void ShowTokensToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitializeInterpret(editorTextBox.Text);
-            tokensTextBox.Text = Interpret.Parser.Lexer.TokensToString();
+            try
+            {
+                InitializeInterpret(editorTextBox.Text);
+                tokensTextBox.Text = Interpret.Parser.Lexer.TokensToString();
+            }
+            catch (LanguageLibrary.Exceptions.LanguageException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void ShowASTToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeViewAST.Nodes.Clear();
-            InitializeInterpret(editorTextBox.Text);
-            TreeViewBuilder builder = new TreeViewBuilder(Interpret.Parser);
-            builder.BuildTreeView(treeViewAST);
-            treeViewAST.ExpandAll();
+            try
+            { 
+                treeViewAST.Nodes.Clear();
+                InitializeInterpret(editorTextBox.Text);
+                TreeViewBuilder builder = new TreeViewBuilder(Interpret.Parser);
+                builder.BuildTreeView(treeViewAST);
+                treeViewAST.ExpandAll();
+            }
+            catch (LanguageLibrary.Exceptions.LanguageException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void RunProgramToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InitializeInterpret(editorTextBox.Text);
-            Interpret.Interpret();
+            try
+            {
+                InitializeInterpret(editorTextBox.Text);
+                Interpret.Interpret();
+
+            }
+            catch (LanguageLibrary.Exceptions.LanguageException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void InitializeInterpret(string source)
         {
@@ -204,7 +237,7 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         #region ABOUT
         private void ViewGrammarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GrammarPopUp grammar = new GrammarPopUp(OpenFileFromRootProjectDirectory(@"Grammar\ITEJA_Grammar.txt"));
+            GrammarPopUp grammar = new GrammarPopUp(OpenFileFromRootProjectDirectory(@"Grammar\ITEJA_Grammar.txt", out string path));
             grammar.Show();
         }
 

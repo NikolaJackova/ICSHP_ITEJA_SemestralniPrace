@@ -10,11 +10,9 @@ namespace LanguageLibrary.Interpreter
 {
     class ExecutionContext
     {
-        private Dictionary<string, object> Variables;
         public Variables Vars { get; private set; }
         public ExecutionContext()
         {
-            Variables = new Dictionary<string, object>();
             Vars = new Variables();
         }
     }

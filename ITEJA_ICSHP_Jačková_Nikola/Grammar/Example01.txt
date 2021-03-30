@@ -2,11 +2,19 @@ BEGIN
 var hello, counter1;
 hello = "Hello World!";
 counter1 = 0;
-while (counter1 < 10){
+while (counter1 < 20){
    if(counter1 == 5){
       counter1 = counter1 + 5;
    }
+   if(hello == "Hello World!"){
+      method Print(hello, "is Hello World!");
+   }
+   if(hello > "Hello"){
+      method Print(hello, " is bigger than Hello");
+   } else {
+   method Print(hello, "is smaller than Hello World!");
+   }
    counter1 = counter1 + 1;
-   method Print(counter1, hello);
+   method Print(counter1, " ", hello);
 }
 END.

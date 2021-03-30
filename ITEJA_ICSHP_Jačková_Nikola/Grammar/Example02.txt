@@ -1,14 +1,16 @@
 BEGIN
-var a, b, c;
+var a, b, c, i;
 a = 1.5;
 b = 10;
 for i, from a to b, i = i+1; {
-   b = a + i;
    c = b + i;
 }
-method Vypis(b+c+a);
-if(a > b){
-   method Print("A is bigger than B!");
+method Print(a, " ", b, " ", c);
+method Print(b+c+a);
+b = a;
+method Print(a, b);
+if(a >= b){
+   method Print("A is bigger or equal than B!");
 } else {
    method Print("B is bigger than A!");
 }

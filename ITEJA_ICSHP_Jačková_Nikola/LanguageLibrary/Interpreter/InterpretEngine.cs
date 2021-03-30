@@ -22,7 +22,7 @@ namespace LanguageLibrary.Interpreter
             Parser = parser;
             ExecutionContexts = new Stack<ExecutionContext>();
         }
-        
+
         public void Interpret()
         {
             ExecutionContexts.Push(new ExecutionContext());
@@ -59,29 +59,9 @@ namespace LanguageLibrary.Interpreter
             Console.WriteLine(builder.ToString());
             return builder.ToString();
         }
-        public object VisitForStatement(ForStatement statement)
-        {
-            foreach (var context in ExecutionContexts)
-            {
-                if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
-                {
-                    context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.NUMBER, statement.From.Accept(this)));
-                }
-            }
-            for (int i = Convert.ToInt32(statement.From.Accept(this)); i <= Convert.ToInt32(statement.To.Accept(this)); i = Convert.ToInt32(VisitIdentExpression(statement.Statement.Identifier)))
-            {
-                foreach (var block in statement.Blocks)
-                {
-                    block.Accept(this);
-                }
-                statement.Statement.Accept(this);
-            }
-            return null;
-        }
 
         public object VisitVariable(VariableDeclaration variable)
         {
-            //TODO implement VariableType
             foreach (var context in ExecutionContexts)
             {
                 if (context.Vars.ExistsVariable(variable.Var.Identifier))
@@ -101,17 +81,58 @@ namespace LanguageLibrary.Interpreter
             {
                 if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
                 {
-                    if (statement.Expression.Accept(this) is string)
+                    Variable variable = context.Vars.GetVariable(statement.Identifier.Identifier);
+                    object obj = statement.Expression.Accept(this);
+                    if (obj is string)
                     {
-                        context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.STRING, statement.Expression.Accept(this)));
-                    } else if (statement.Expression.Accept(this) is double)
+                        if (variable?.Type == VarType.STRING || variable == null)
+                        {
+                            context.Vars.SetVariable(statement.Identifier.Identifier,
+                                new Variable(VarType.STRING, statement.Expression.Accept(this), statement.Identifier));
+                        }
+                        else
+                        {
+                            throw new InterpretException("You are trying to cast wrong value into number variable!");
+                        }
+                    }
+                    else if (obj is double)
                     {
-                        context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.NUMBER, statement.Expression.Accept(this)));
+                        if (variable?.Type == VarType.NUMBER || variable == null)
+                        {
+                            context.Vars.SetVariable(statement.Identifier.Identifier,
+                                new Variable(VarType.NUMBER, statement.Expression.Accept(this), statement.Identifier));
+                        }
+                        else
+                        {
+                            throw new InterpretException("You are trying to cast wrong value into string variable!");
+                        }
                     }
                     return null;
                 }
             }
             throw new InterpretException("Variable: " + statement.Identifier.Identifier + " was not declared!");
+        }
+        public object VisitForStatement(ForStatement statement)
+        {
+            foreach (var context in ExecutionContexts)
+            {
+                if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
+                {
+                    context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.NUMBER, Math.Round(Convert.ToDouble(statement.From.Accept(this)),0), statement.Identifier));
+                    break;
+                }
+            }
+            for (int i = Convert.ToInt32(statement.From.Accept(this)); i <= Convert.ToInt32(statement.To.Accept(this)); i =
+                Convert.ToInt32(VisitIdentExpression(statement.Statement.Identifier)))
+            {
+                foreach (var block in statement.Blocks)
+                {
+                    block.Accept(this);
+                }
+                //Assigning typically i variable to value in statement
+                statement.Statement.Accept(this);
+            }
+            return null;
         }
         public object VisitIfStatement(IfStatement statement)
         {
@@ -155,31 +176,112 @@ namespace LanguageLibrary.Interpreter
         #region CONDITION
         public object VisitGreaterEqThanRel(GreaterEqThanRel condition)
         {
-            return (double)condition.Left.Accept(this) >= (double)condition.Right.Accept(this);
+            if (!IsBinaryRelConditionValid(condition, out string message))
+            {
+                throw new InterpretException(message);
+            }
+            if (message == "string")
+            {
+                return ((string)condition.Left.Accept(this)).Length >= ((string)condition.Right.Accept(this)).Length;
+            }
+            else if (message == "number")
+            {
+                return (double)condition.Left.Accept(this) >= (double)condition.Right.Accept(this);
+            }
+            throw new InterpretException("Unexprected exception in Greater Or Equal Than Relation!");
         }
         public object VisitGreaterThanRel(GreaterThanRel condition)
         {
-            return (double)condition.Left.Accept(this) > (double)condition.Right.Accept(this);
+            if (!IsBinaryRelConditionValid(condition, out string message))
+            {
+                throw new InterpretException(message);
+            }
+            if (message == "string")
+            {
+                return ((string)condition.Left.Accept(this)).Length > ((string)condition.Right.Accept(this)).Length;
+            }
+            else if (message == "number")
+            {
+                return (double)condition.Left.Accept(this) > (double)condition.Right.Accept(this);
+            }
+            throw new InterpretException("Unexprected exception in Greater Than Relation!");
         }
         public object VisitLessEqThanRel(LessEqThanRel condition)
         {
-            return (double)condition.Left.Accept(this) <= (double)condition.Right.Accept(this);
+            if (!IsBinaryRelConditionValid(condition, out string message))
+            {
+                throw new InterpretException(message);
+            }
+            if (message == "string")
+            {
+                return ((string)condition.Left.Accept(this)).Length <= ((string)condition.Right.Accept(this)).Length;
+            }
+            else if (message == "number")
+            {
+                return (double)condition.Left.Accept(this) <= (double)condition.Right.Accept(this);
+            }
+            throw new InterpretException("Unexprected exception in Less Or Equal Than Relation!");
         }
         public object VisitLessThanRel(LessThanRel condition)
         {
-            return (double)condition.Left.Accept(this) < (double)condition.Right.Accept(this);
+            if (!IsBinaryRelConditionValid(condition, out string message))
+            {
+                throw new InterpretException(message);
+            }
+            if (message == "string")
+            {
+                return ((string)condition.Left.Accept(this)).Length < ((string)condition.Right.Accept(this)).Length;
+            }
+            else if (message == "number")
+            {
+                return (double)condition.Left.Accept(this) < (double)condition.Right.Accept(this);
+            }
+            throw new InterpretException("Unexprected exception in Less Than Relation!");
         }
         public object VisitEqualsRel(EqualsRel condition)
         {
-            return (double)condition.Left.Accept(this) == (double)condition.Right.Accept(this);
+            if (!IsBinaryRelConditionValid(condition, out string message))
+            {
+                throw new InterpretException(message);
+            }
+            if (message == "string")
+            {
+                return (string)condition.Left.Accept(this) == (string)condition.Right.Accept(this);
+            }
+            else if (message == "number")
+            {
+                return (double)condition.Left.Accept(this) == (double)condition.Right.Accept(this);
+            }
+            throw new InterpretException("Unexprected exception in Equal Relation!");
         }
         public object VisitNotEqualRel(NotEqualRel condition)
         {
-            return (double)condition.Left.Accept(this) != (double)condition.Right.Accept(this);
+            if (!IsBinaryRelConditionValid(condition, out string message))
+            {
+                throw new InterpretException(message);
+            }
+            if (message == "string")
+            {
+                return (string)condition.Left.Accept(this) != (string)condition.Right.Accept(this);
+            }
+            else if (message == "number")
+            {
+                return (double)condition.Left.Accept(this) != (double)condition.Right.Accept(this);
+            }
+            throw new InterpretException("Unexprected exception in Not Equal Relation!");
         }
         public object VisitOneStatement(OneStatementCondition condition)
         {
-            return condition.Left.Accept(this);
+            if (condition.Left is StringExpression || condition.Left.Accept(this) is string)
+            {
+                throw new InterpretException("String cannot be as a condition in one statement condition!");
+            }
+            double obj = (double)condition.Left.Accept(this);
+            if (obj > 0)
+            {
+                return true;
+            }
+            return false;
         }
         #endregion CONDITION
 
@@ -190,7 +292,7 @@ namespace LanguageLibrary.Interpreter
             {
                 if (context.Vars.ExistsVariable(expression.Identifier))
                 {
-                    return context.Vars.GetVariable(expression.Identifier);
+                    return context.Vars.GetVariable(expression.Identifier).Value;
                 }
             }
             throw new InterpretException("Variable: " + expression.Identifier + " does not exists!");
@@ -214,21 +316,88 @@ namespace LanguageLibrary.Interpreter
         #region BINARY_EXPRESSION
         public object VisitPlus(Plus expression)
         {
-            return (double)expression.Left.Accept(this) + (double)expression.Right.Accept(this);
+            if (!IsBinaryExpressionValid(expression, out string message))
+            {
+                throw new InterpretException(message);
+            }
+            if (message == "string")
+            {
+                return String.Concat((string)expression.Left.Accept(this), (string)expression.Right.Accept(this));
+            } else if (message == "number")
+            {
+                return (double)expression.Left.Accept(this) + (double)expression.Right.Accept(this);
+            }
+            throw new InterpretException("Unexprected exception in Plus Relation!");
         }
         public object VisitMinus(Minus expression)
         {
+            if (!IsBinaryExpressionValid(expression, out string message))
+            {
+                throw new InterpretException(message);
+            }
             return (double)expression.Left.Accept(this) - (double)expression.Right.Accept(this);
         }
         public object VisitMultiply(Multiply expression)
         {
+            if (!IsBinaryExpressionValid(expression, out string message))
+            {
+                throw new InterpretException(message);
+            }
             return (double)expression.Left.Accept(this) * (double)expression.Right.Accept(this);
         }
         public object VisitDivide(Divide expression)
         {
+            if (!IsBinaryExpressionValid(expression, out string message))
+            {
+                throw new InterpretException(message);
+            }
             return (double)expression.Left.Accept(this) / (double)expression.Right.Accept(this);
         }
         #endregion BINARY_EXPRESSION
         #endregion EXPRESSION
+
+        private bool IsBinaryExpressionValid(BinaryExpression expression, out string message)
+        {
+            if (expression.Left.Accept(this) is string && expression.Right.Accept(this) is double ||
+            expression.Right.Accept(this) is string && expression.Left.Accept(this) is double)
+            {
+                message = "You cannot + or - or * or / different datatypes!";
+                return false;
+            }
+            if ((expression.Left.Accept(this) is string || expression.Right.Accept(this) is string) && !(expression is Plus))
+            {
+                message = "You cannot - or * or / with string datatypes!";
+                return false;
+            }
+            if (expression.Left.Accept(this) is string)
+            {
+                message = "string";
+            }
+            else
+            {
+                message = "number";
+            }
+            return true;
+        }
+
+        private bool IsBinaryRelConditionValid(BinaryRelCondition condition, out string message)
+        {
+            //Testing if condition is comparing same datatype
+            if ((condition.Left.Accept(this) is string && condition.Right.Accept(this) is double) ||
+                (condition.Right.Accept(this) is string && condition.Left.Accept(this) is double))
+            {
+                message = "You cannot compare different datatypes!";
+                return false;
+            }
+            if (condition.Left.Accept(this) is string)
+            {
+                message = "string";
+            }
+            else
+            {
+                message = "number";
+            }
+            return true;
+        }
     }
 }

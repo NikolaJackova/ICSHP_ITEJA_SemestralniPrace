@@ -6,6 +6,7 @@ using LanguageLibrary.Parser.Statements;
 using LanguageLibrary.Parser.Variables;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -324,12 +325,15 @@ namespace LanguageLibrary.Parser
             {
                 case TokenType.NUMBER:
                     NextToken(TokenType.NUMBER);
-                    return new NumberExpression(int.Parse(token.Value));
+                    return new NumberExpression(double.Parse(token.Value.Replace(".",",")));
                 case TokenType.IDENTIFIER:
                     NextToken(TokenType.IDENTIFIER);
                     return new IdentExpression(token.Value);
-                case TokenType.STRING:
+                case TokenType.QUOTE:
+                    NextToken(TokenType.QUOTE);
+                    token = CurrentToken;
                     NextToken(TokenType.STRING);
+                    NextToken(TokenType.QUOTE);
                     return new StringExpression(token.Value);
                 case TokenType.PLUS:
                     NextToken(TokenType.PLUS);

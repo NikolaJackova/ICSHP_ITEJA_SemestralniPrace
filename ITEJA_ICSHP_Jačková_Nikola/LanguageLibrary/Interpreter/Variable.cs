@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageLibrary.Parser.Expressions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,12 +14,14 @@ namespace LanguageLibrary.Interpreter
     }
     public class Variable
     {
+        public IdentExpression Identifier { get; private set; }
         public object Value { get; private set; }
         public VarType Type { get; private set; }
-        public Variable(VarType type, object value)
+        public Variable(VarType type, object value, IdentExpression ident)
         {
             Value = value;
             Type = type;
+            Identifier = ident;
         }
     }
 }

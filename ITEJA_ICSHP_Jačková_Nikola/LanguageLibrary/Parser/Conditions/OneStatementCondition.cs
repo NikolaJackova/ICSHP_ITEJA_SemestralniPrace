@@ -8,6 +8,10 @@ using LanguageLibrary.Parser.Expressions;
 
 namespace LanguageLibrary.Parser.Conditions
 {
+    /// <summary>
+    /// One statement condition is true when number is positive, false when 0 or negative
+    /// Only number expressions are valid
+    /// </summary>
     public class OneStatementCondition : Condition
     {
         public OneStatementCondition(Expression expr) :base(expr)
