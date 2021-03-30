@@ -161,7 +161,9 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             try
             {
                 InitializeInterpret(editorTextBox.Text);
-                Interpret.Interpret();
+                Console console = new Console(Interpret);
+                console.Show();
+                //Interpret.Interpret();
 
             }
             catch (LanguageLibrary.Exceptions.LanguageException ex)
@@ -176,9 +178,7 @@ namespace ITEJA_ICSHP_Jačková_Nikola
                 MessageBox.Show("There is no code for process!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            LanguageLibrary.Lexer.Lexer lexer = new LanguageLibrary.Lexer.Lexer(source);
-            LanguageLibrary.Parser.Parser parser = new LanguageLibrary.Parser.Parser(lexer);
-            Interpret = new LanguageLibrary.Interpreter.Interpreter(parser);
+            Interpret = new LanguageLibrary.Interpreter.Interpreter(source);
         }
         #endregion INTERPRET
 

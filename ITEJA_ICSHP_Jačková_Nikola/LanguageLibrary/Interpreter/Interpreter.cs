@@ -16,11 +16,11 @@ namespace LanguageLibrary.Interpreter
     {
         private InterpretEngine Engine { get; set; }
         public Parser.Parser Parser { get; private set; }
-        public Interpreter(Parser.Parser parser)
-        {
-            Parser = parser;
-            Engine = new InterpretEngine(parser);
-            
+
+        public Interpreter(string source){
+            Lexer.Lexer lexer = new Lexer.Lexer(source);
+            Parser = new Parser.Parser(lexer);
+            Engine = new InterpretEngine(Parser);
         }
         /// <summary>
         /// Interprets AST from Parser through InterpetEngine
@@ -28,6 +28,11 @@ namespace LanguageLibrary.Interpreter
         public void Interpret()
         {
             Engine.Interpret();
+        }
+
+        public void SetPrint(PrintMethodDelegate @delegate)
+        {
+            Engine.Print = @delegate;
         }
     }
 }

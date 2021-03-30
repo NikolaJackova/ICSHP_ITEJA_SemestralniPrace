@@ -258,9 +258,8 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         {
             TreeNode node = new TreeNode
             {
-                Text = "Method"
+                Text = "Print Method"
             };
-            node.Nodes.Add(method.Identifier.Identifier);
             foreach (var parameter in method.Parameters)
             {
                 node.Nodes.Add((TreeNode)parameter.Accept(this));

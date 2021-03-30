@@ -10,11 +10,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace LanguageLibrary.Interpreter
 {
+
+    public delegate void PrintMethodDelegate(string text);
+
     class InterpretEngine : IVisitor
     {
-        public Parser.Parser Parser { get; private set; }
+        public PrintMethodDelegate Print { get; set; }
+        private Parser.Parser Parser { get; set; }
         private Stack<ExecutionContext> ExecutionContexts { get; set; }
 
         public InterpretEngine(Parser.Parser parser)
@@ -56,8 +61,9 @@ namespace LanguageLibrary.Interpreter
             {
                 builder.Append(parameter.Accept(this));
             }
+            Print(builder.ToString());
             Console.WriteLine(builder.ToString());
-            return builder.ToString();
+            return null;
         }
 
         public object VisitVariable(VariableDeclaration variable)

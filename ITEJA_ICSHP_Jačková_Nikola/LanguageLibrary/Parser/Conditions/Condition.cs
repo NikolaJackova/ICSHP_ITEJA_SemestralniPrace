@@ -17,7 +17,6 @@ namespace LanguageLibrary.Parser.Conditions
         public Condition(Expression expression) {
             Left = expression;
         }
-
         public abstract object Accept(IVisitor visitor);
     }
 }
