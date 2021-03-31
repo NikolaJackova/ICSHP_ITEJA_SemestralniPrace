@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    public class PrintMethod : MethodStatement
+    public class ForwardMethod : MethodStatement
     {
-        public PrintMethod(IdentExpression expression, LinkedList<Expression> parameters) : base(expression, parameters)
+        public ForwardMethod(IdentExpression expression, LinkedList<Expression> parameters) : base(expression, parameters)
         {
         }
-
         public override object Accept(IVisitor visitor)
         {
-            return visitor.VisitPrintMethod(this);
+            throw new NotImplementedException();
         }
     }
 }

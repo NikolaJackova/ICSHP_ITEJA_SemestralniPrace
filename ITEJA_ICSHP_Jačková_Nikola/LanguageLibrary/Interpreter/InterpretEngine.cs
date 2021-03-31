@@ -15,10 +15,11 @@ namespace LanguageLibrary.Interpreter
 {
 
     public delegate void PrintMethodDelegate(string text);
-
+    public delegate void ForwardMethodDelegate(double distance = 30);
     class InterpretEngine : IVisitor
     {
         public PrintMethodDelegate Print { get; set; }
+        public ForwardMethodDelegate Forward { get; set; }
         private Parser.Parser Parser { get; set; }
         private Stack<ExecutionContext> ExecutionContexts { get; set; }
 
@@ -54,18 +55,6 @@ namespace LanguageLibrary.Interpreter
             ExecutionContexts.Pop();
             return null;
         }
-        public object VisitPrintMethod(PrintMethod method)
-        {
-            StringBuilder builder = new StringBuilder();
-            foreach (var parameter in method.Parameters)
-            {
-                builder.Append(parameter.Accept(this));
-            }
-            Print(builder.ToString());
-            Console.WriteLine(builder.ToString());
-            return null;
-        }
-
         public object VisitVariable(VariableDeclaration variable)
         {
             foreach (var context in ExecutionContexts)
@@ -177,6 +166,40 @@ namespace LanguageLibrary.Interpreter
             }
             return null;
         }
+        #region METHOD
+        public object VisitPrintMethod(PrintMethod method)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (var parameter in method.Parameters)
+            {
+                builder.Append(parameter.Accept(this));
+            }
+            Print(builder.ToString());
+            Console.WriteLine(builder.ToString());
+            return null;
+        }
+        public object VisitForwardMethod(ForwardMethod method)
+        {
+            if (method.Parameters.Count <= 1)
+            {
+                if (method.Parameters.Count == 0)
+                {
+                    Forward();
+                }
+                else
+                {
+                    object obj = method.Parameters.ElementAt(0).Accept(this);
+                    if (obj is double @double)
+                    {
+                        Forward(@double);
+                    }
+                    throw new InterpretException("Only number expression are allowed!");
+                }
+                return null;
+            }
+            throw new InterpretException("There is to much parameters in forward method! Only 0 or 1 is allowed!");
+        }
+        #endregion METHOD
         #endregion STATEMENT
 
         #region CONDITION

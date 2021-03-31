@@ -85,6 +85,7 @@
     <Compile Include="Parser\Program.cs" />
     <Compile Include="Parser\Statements\ElseStatement.cs" />
     <Compile Include="Parser\Statements\ForStatement.cs" />
+    <Compile Include="Parser\Statements\ForwardMethod.cs" />
     <Compile Include="Parser\Statements\IfStatement.cs" />
     <Compile Include="Parser\Statements\MethodStatement.cs" />
     <Compile Include="Parser\Statements\PrintMethod.cs" />

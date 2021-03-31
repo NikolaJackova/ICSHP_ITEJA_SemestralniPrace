@@ -125,9 +125,9 @@ namespace LanguageLibrary.Parser
             switch (identifier.Identifier)
             {
                 case "Print":
-                    return new PrintMethod(parameters);
-                case "":
-                    break;
+                    return new PrintMethod(identifier, parameters);
+                case "Forward":
+                    return new ForwardMethod(identifier, parameters);
             }
             //return new MethodStatement(identifier, parameters);
             return null;

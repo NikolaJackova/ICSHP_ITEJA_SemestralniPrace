@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace ITEJA_ICSHP_Jačková_Nikola
 {
+    //TODO need refactor - duplicity
     class TreeViewBuilder : IVisitor
     {
         private Parser Parser { get; set; }
@@ -26,6 +27,16 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             LanguageLibrary.Parser.Program program = Parser.Parse();
             TreeNode root = (TreeNode)program.Accept(this);
             treeView.Nodes.Add(root);
+        }
+
+        public object VisitProgram(LanguageLibrary.Parser.Program program)
+        {
+            TreeNode programNode = new TreeNode()
+            {
+                Text = "Program"
+            };
+            programNode.Nodes.Add((TreeNode)program.Block.Accept(this));
+            return programNode;
         }
 
         public object VisitBlock(Block block)
@@ -44,15 +55,31 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             }
             return blockNode;
         }
-
-        public object VisitDivide(Divide expression)
+        public object VisitVariable(VariableDeclaration variable)
         {
             TreeNode node = new TreeNode
             {
-                Text = "Divide: /"
+                Text = "Var"
             };
-            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
-            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
+            node.Nodes.Add((TreeNode)variable.Var.Accept(this));
+            return node;
+        }
+        #region STATEMENT
+        public object VisitIfStatement(IfStatement statement)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "If"
+            };
+            node.Nodes.Add((TreeNode)statement.Condition.Accept(this));
+            foreach (var block in statement.Blocks)
+            {
+                node.Nodes.Add((TreeNode)block.Accept(this));
+            }
+            if (statement.ElseStatement != null)
+            {
+                node.Nodes.Add((TreeNode)VisitElseStatement(statement.ElseStatement));
+            }
             return node;
         }
 
@@ -68,18 +95,6 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             }
             return node;
         }
-
-        public object VisitEqualsRel(EqualsRel condition)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Equal: =="
-            };
-            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
-            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
-            return node;
-        }
-
         public object VisitForStatement(ForStatement statement)
         {
             TreeNode node = new TreeNode
@@ -94,6 +109,72 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             {
                 node.Nodes.Add((TreeNode)block.Accept(this));
             }
+            return node;
+        }
+        public object VisitSetStatement(SetStatement statement)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Set: ="
+            };
+            node.Nodes.Add((TreeNode)statement.Identifier.Accept(this));
+            node.Nodes.Add((TreeNode)statement.Expression.Accept(this));
+            return node;
+        }
+        public object VisitWhileStatement(WhileStatement statement)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "While"
+            };
+            node.Nodes.Add((TreeNode)statement.Condition.Accept(this));
+            foreach (var block in statement.Blocks)
+            {
+                node.Nodes.Add((TreeNode)block.Accept(this));
+            }
+            return node;
+        }
+        #region METHOD
+        public object VisitPrintMethod(PrintMethod method)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = method.Identifier.Identifier
+            };
+            TreeNode parameterNode = new TreeNode("Parameters");
+            node.Nodes.Add(parameterNode);
+            foreach (var parameter in method.Parameters)
+            {
+                parameterNode.Nodes.Add((TreeNode)parameter.Accept(this));
+            }
+            return node;
+        }
+        public object VisitForwardMethod(ForwardMethod method)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = method.Identifier.Identifier
+            };
+            TreeNode parameterNode = new TreeNode("Parameters");
+            node.Nodes.Add(parameterNode);
+            foreach (var parameter in method.Parameters)
+            {
+                parameterNode.Nodes.Add((TreeNode)parameter.Accept(this));
+            }
+            return node;
+        }
+        #endregion METHOD
+        #endregion STATEMENT
+
+        #region CONDITION
+        public object VisitEqualsRel(EqualsRel condition)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Equal: =="
+            };
+            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
+            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
             return node;
         }
 
@@ -119,34 +200,6 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             return node;
         }
 
-        public object VisitIdentExpression(IdentExpression expression)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Identifier"
-            };
-            node.Nodes.Add(expression.Identifier);
-            return node;
-        }
-
-        public object VisitIfStatement(IfStatement statement)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "If"
-            };
-            node.Nodes.Add((TreeNode)statement.Condition.Accept(this));
-            foreach (var block in statement.Blocks)
-            {
-                node.Nodes.Add((TreeNode)block.Accept(this));
-            }
-            if (statement.ElseStatement != null)
-            {
-                node.Nodes.Add((TreeNode)VisitElseStatement(statement.ElseStatement));
-            }
-            return node;
-        }
-
         public object VisitLessEqThanRel(LessEqThanRel condition)
         {
             TreeNode node = new TreeNode
@@ -168,39 +221,6 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             node.Nodes.Add((TreeNode)condition.Right.Accept(this));
             return node;
         }
-
-        public object VisitMinus(Minus expression)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Minus: -"
-            };
-            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
-            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
-            return node;
-        }
-
-        public object VisitMinusUnary(MinusUnary expression)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Unary: -"
-            };
-            node.Nodes.Add((TreeNode)expression.Expression.Accept(this));
-            return node;
-        }
-
-        public object VisitMultiply(Multiply expression)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Multiply: *"
-            };
-            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
-            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
-            return node;
-        }
-
         public object VisitNotEqualRel(NotEqualRel condition)
         {
             TreeNode node = new TreeNode
@@ -211,17 +231,6 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             node.Nodes.Add((TreeNode)condition.Right.Accept(this));
             return node;
         }
-
-        public object VisitNumberExpression(NumberExpression expression)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Number"
-            };
-            node.Nodes.Add(expression.Value.ToString());
-            return node;
-        }
-
         public object VisitOneStatement(OneStatementCondition condition)
         {
             TreeNode node = new TreeNode
@@ -231,7 +240,48 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             node.Nodes.Add((TreeNode)condition.Left.Accept(this));
             return node;
         }
+        #endregion CONDITION
 
+        #region EXPRESSION
+        public object VisitMinusUnary(MinusUnary expression)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Unary: -"
+            };
+            node.Nodes.Add((TreeNode)expression.Expression.Accept(this));
+            return node;
+        }
+        public object VisitPlusUnary(PlusUnary expression)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Unary: +"
+            };
+            node.Nodes.Add((TreeNode)expression.Expression.Accept(this));
+            return node;
+        }
+        #region BINARY_RELATION_EXPRESSION
+        public object VisitDivide(Divide expression)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Divide: /"
+            };
+            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
+            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
+            return node;
+        }
+        public object VisitMultiply(Multiply expression)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Multiply: *"
+            };
+            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
+            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
+            return node;
+        }
         public object VisitPlus(Plus expression)
         {
             TreeNode node = new TreeNode
@@ -242,51 +292,17 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             node.Nodes.Add((TreeNode)expression.Right.Accept(this));
             return node;
         }
-
-        public object VisitPlusUnary(PlusUnary expression)
+        public object VisitMinus(Minus expression)
         {
             TreeNode node = new TreeNode
             {
-                Text = "Unary: +"
+                Text = "Minus: -"
             };
-            node.Nodes.Add((TreeNode)expression.Expression.Accept(this));
+            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
+            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
             return node;
         }
-
-        public object VisitPrintMethod(PrintMethod method)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Print Method"
-            };
-            foreach (var parameter in method.Parameters)
-            {
-                node.Nodes.Add((TreeNode)parameter.Accept(this));
-            }
-            return node;
-        }
-
-        public object VisitProgram(LanguageLibrary.Parser.Program program)
-        {
-            TreeNode programNode = new TreeNode()
-            {
-                Text = "Program"
-            };
-            programNode.Nodes.Add((TreeNode)program.Block.Accept(this));
-            return programNode;
-        }
-
-        public object VisitSetStatement(SetStatement statement)
-        {
-            TreeNode node = new TreeNode
-            {
-                Text = "Set: ="
-            };
-            node.Nodes.Add((TreeNode)statement.Identifier.Accept(this));
-            node.Nodes.Add((TreeNode)statement.Expression.Accept(this));
-            return node;
-        }
-
+        #endregion BINARY_RELATION_EXPRESSION
         public object VisitStringExpression(StringExpression expression)
         {
             TreeNode node = new TreeNode
@@ -296,29 +312,24 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             node.Nodes.Add(expression.Text);
             return node;
         }
-
-        public object VisitVariable(VariableDeclaration variable)
+        public object VisitIdentExpression(IdentExpression expression)
         {
             TreeNode node = new TreeNode
             {
-                Text = "Var"
+                Text = "Identifier"
             };
-            node.Nodes.Add((TreeNode)variable.Var.Accept(this));
+            node.Nodes.Add(expression.Identifier);
             return node;
         }
-
-        public object VisitWhileStatement(WhileStatement statement)
+        public object VisitNumberExpression(NumberExpression expression)
         {
             TreeNode node = new TreeNode
             {
-                Text = "While"
+                Text = "Number"
             };
-            node.Nodes.Add((TreeNode)statement.Condition.Accept(this));
-            foreach (var block in statement.Blocks)
-            {
-                node.Nodes.Add((TreeNode)block.Accept(this));
-            }
+            node.Nodes.Add(expression.Value.ToString());
             return node;
         }
+        #endregion EXPRESSION
     }
 }

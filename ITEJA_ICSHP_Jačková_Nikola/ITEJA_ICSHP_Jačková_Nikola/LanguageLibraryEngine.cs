@@ -24,5 +24,6 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         {
             Interpreter = new LanguageLibrary.Interpreter.Interpreter(source);
         }
+
     }
 }

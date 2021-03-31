@@ -33,5 +33,10 @@ namespace LanguageLibrary.Interpreter
         {
             Engine.Print = @delegate;
         }
+
+        public void SetForward(ForwardMethodDelegate @delegate)
+        {
+            Engine.Forward = @delegate;
+        }
     }
 }
