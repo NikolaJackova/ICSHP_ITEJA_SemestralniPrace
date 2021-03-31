@@ -29,11 +29,8 @@ namespace LanguageLibrary.Parser
         /// <returns>Program as a root node</returns>
         public Program Parse()
         {
-            return Engine.GetProgram();
-        }
-        public void ResetParser()
-        {
             Engine.ResetParser();
+            return Engine.GetProgram();
         }
     }
 }

@@ -23,7 +23,6 @@ namespace ITEJA_ICSHP_Jačková_Nikola
 
         public void BuildTreeView(TreeView treeView)
         {
-            Parser.ResetParser();
             LanguageLibrary.Parser.Program program = Parser.Parse();
             TreeNode root = (TreeNode)program.Accept(this);
             treeView.Nodes.Add(root);

@@ -6,13 +6,23 @@ using System.Threading.Tasks;
 
 namespace ITEJA_ICSHP_Jačková_Nikola
 {
-    class LanguageLibraryEngine
+    public class LanguageLibraryEngine
     {
+        private static LanguageLibraryEngine Instance { get; set; }
         public LanguageLibrary.Interpreter.Interpreter Interpreter { get; private set; }
 
-        public LanguageLibraryEngine(LanguageLibrary.Interpreter.Interpreter interpreter)
+        public static LanguageLibraryEngine GetInstance()
         {
-            
+            if (Instance == null)
+            {
+                Instance = new LanguageLibraryEngine();
+            }
+            return Instance;
+        }
+
+        public void InitializeInterpret(string source)
+        {
+            Interpreter = new LanguageLibrary.Interpreter.Interpreter(source);
         }
     }
 }

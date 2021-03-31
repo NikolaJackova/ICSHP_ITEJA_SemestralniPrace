@@ -29,7 +29,6 @@ namespace LanguageLibrary.Interpreter
         {
             Engine.Interpret();
         }
-
         public void SetPrint(PrintMethodDelegate @delegate)
         {
             Engine.Print = @delegate;

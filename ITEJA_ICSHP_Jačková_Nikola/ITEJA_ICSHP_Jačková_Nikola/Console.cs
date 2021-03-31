@@ -14,23 +14,25 @@ namespace ITEJA_ICSHP_Jačková_Nikola
 {
     public partial class Console : Form
     {
-        public Interpreter Interpreter { get; private set; }
-        public Console(Interpreter interpreter)
+        private LanguageLibraryEngine Engine { get; set; }
+        public Console(LanguageLibraryEngine engine)
         {
-            Interpreter = interpreter;
-            Interpreter.SetPrint(PrintMethod);
+            Engine = engine;
+            Engine.Interpreter.SetPrint(PrintMethod);
             InitializeComponent();
             RunProgram();
         }
 
         private void RunProgram()
         {
-            Interpreter.Interpret();
+            Turtle.InitializeTurtle(splitContainer1.Panel2);
+            Engine.Interpreter.Interpret();
         }
 
         private void PrintMethod(string text)
         {
             richTextBoxConsole.Text += text + "\n";
         }
+        
     }
 }

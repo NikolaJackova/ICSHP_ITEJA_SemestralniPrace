@@ -14,9 +14,10 @@ namespace ITEJA_ICSHP_Jačková_Nikola
     public partial class InterpretGUI : Form
     {
         public string FilePath { get; private set; } = string.Empty;
-        public LanguageLibrary.Interpreter.Interpreter Interpret { get; private set; }
+        private LanguageLibraryEngine Engine { get; set; }
         public InterpretGUI()
         {
+            Engine = LanguageLibraryEngine.GetInstance();
             InitializeComponent();
             //For testing purposes
             loadExample01ToolStripMenuItem.PerformClick();
@@ -46,7 +47,6 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             editorTextBox.Clear();
             tokensTextBox.Clear();
             treeViewAST.Nodes.Clear();
-            Interpret = null;
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
@@ -133,8 +133,10 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         {
             try
             {
-                InitializeInterpret(editorTextBox.Text);
-                tokensTextBox.Text = Interpret.Parser.Lexer.TokensToString();
+                tokensTextBox.Text = string.Empty;
+                if (InitializeInterpret(editorTextBox.Text)) {
+                    tokensTextBox.Text = Engine.Interpreter.Parser.Lexer.TokensToString();
+                }
             }
             catch (LanguageLibrary.Exceptions.LanguageException ex)
             {
@@ -144,12 +146,14 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         private void ShowASTToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
-            { 
+            {
                 treeViewAST.Nodes.Clear();
-                InitializeInterpret(editorTextBox.Text);
-                TreeViewBuilder builder = new TreeViewBuilder(Interpret.Parser);
-                builder.BuildTreeView(treeViewAST);
-                treeViewAST.ExpandAll();
+                if (InitializeInterpret(editorTextBox.Text))
+                {
+                    TreeViewBuilder builder = new TreeViewBuilder(Engine.Interpreter.Parser);
+                    builder.BuildTreeView(treeViewAST);
+                    treeViewAST.ExpandAll();
+                }
             }
             catch (LanguageLibrary.Exceptions.LanguageException ex)
             {
@@ -160,10 +164,11 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         {
             try
             {
-                InitializeInterpret(editorTextBox.Text);
-                Console console = new Console(Interpret);
-                console.Show();
-                //Interpret.Interpret();
+                if (InitializeInterpret(editorTextBox.Text))
+                {
+                    Console console = new Console(Engine);
+                    console.Show();
+                }
 
             }
             catch (LanguageLibrary.Exceptions.LanguageException ex)
@@ -171,14 +176,15 @@ namespace ITEJA_ICSHP_Jačková_Nikola
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void InitializeInterpret(string source)
+        private bool InitializeInterpret(string source)
         {
             if (editorTextBox.Text == string.Empty)
             {
                 MessageBox.Show("There is no code for process!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                return false;
             }
-            Interpret = new LanguageLibrary.Interpreter.Interpreter(source);
+            Engine.InitializeInterpret(source);
+            return true;
         }
         #endregion INTERPRET
 

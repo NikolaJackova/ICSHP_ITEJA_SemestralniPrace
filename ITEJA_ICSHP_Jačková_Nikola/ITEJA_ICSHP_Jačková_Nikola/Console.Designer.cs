@@ -44,8 +44,8 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.richTextBoxConsole);
-            this.splitContainer1.Size = new System.Drawing.Size(933, 552);
-            this.splitContainer1.SplitterDistance = 464;
+            this.splitContainer1.Size = new System.Drawing.Size(1192, 721);
+            this.splitContainer1.SplitterDistance = 465;
             this.splitContainer1.TabIndex = 0;
             // 
             // richTextBoxConsole
@@ -53,7 +53,7 @@
             this.richTextBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxConsole.Location = new System.Drawing.Point(0, 0);
             this.richTextBoxConsole.Name = "richTextBoxConsole";
-            this.richTextBoxConsole.Size = new System.Drawing.Size(464, 552);
+            this.richTextBoxConsole.Size = new System.Drawing.Size(465, 721);
             this.richTextBoxConsole.TabIndex = 1;
             this.richTextBoxConsole.Text = "";
             // 
@@ -61,7 +61,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(933, 552);
+            this.ClientSize = new System.Drawing.Size(1192, 721);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Console";
             this.Text = "Console";
