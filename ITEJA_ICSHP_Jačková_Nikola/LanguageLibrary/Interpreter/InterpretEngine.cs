@@ -15,11 +15,16 @@ namespace LanguageLibrary.Interpreter
 {
 
     public delegate void PrintMethodDelegate(string text);
-    public delegate void ForwardMethodDelegate(double distance = 30);
+    public delegate void ForwardMethodDelegate(double distance);
+    public delegate void BackwardMethodDelegate(double distance);
+    public delegate void RotateMethodDelegate(double angle);
+
     class InterpretEngine : IVisitor
     {
         public PrintMethodDelegate Print { get; set; }
         public ForwardMethodDelegate Forward { get; set; }
+        public RotateMethodDelegate Rotate { get; set; }
+        public BackwardMethodDelegate Backward { get; set; }
         private Parser.Parser Parser { get; set; }
         private Stack<ExecutionContext> ExecutionContexts { get; set; }
 
@@ -113,7 +118,7 @@ namespace LanguageLibrary.Interpreter
             {
                 if (context.Vars.ExistsVariable(statement.Identifier.Identifier))
                 {
-                    context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.NUMBER, Math.Round(Convert.ToDouble(statement.From.Accept(this)),0), statement.Identifier));
+                    context.Vars.SetVariable(statement.Identifier.Identifier, new Variable(VarType.NUMBER, Math.Round(Convert.ToDouble(statement.From.Accept(this)), 0), statement.Identifier));
                     break;
                 }
             }
@@ -180,25 +185,61 @@ namespace LanguageLibrary.Interpreter
         }
         public object VisitForwardMethod(ForwardMethod method)
         {
-            if (method.Parameters.Count <= 1)
+            if (method.Parameters.Count == 1)
             {
-                if (method.Parameters.Count == 0)
+                object obj = method.Parameters.ElementAt(0).Accept(this);
+                if (obj is double @double)
                 {
-                    Forward();
+                    Forward(@double);
                 }
                 else
                 {
-                    object obj = method.Parameters.ElementAt(0).Accept(this);
-                    if (obj is double @double)
-                    {
-                        Forward(@double);
-                    }
                     throw new InterpretException("Only number expression are allowed!");
+
                 }
                 return null;
             }
-            throw new InterpretException("There is to much parameters in forward method! Only 0 or 1 is allowed!");
+            throw new InterpretException("There is to much parameters in forward method! Only 1 is allowed!");
         }
+
+        public object VisitRotateMethod(RotateMethod method)
+        {
+            if (method.Parameters.Count <= 1)
+            {
+                object obj = method.Parameters.ElementAt(0).Accept(this);
+                if (obj is double @double)
+                {
+                    Rotate(@double);
+                }
+                else
+                {
+                    throw new InterpretException("Only number expression are allowed!");
+                }
+
+                return null;
+            }
+            throw new InterpretException("There is to much parameters in rotate method! Only 1 is allowed!");
+        }
+
+        public object VisitBackwardMethod(BackwardMethod method)
+        {
+            if (method.Parameters.Count == 1)
+            {
+                object obj = method.Parameters.ElementAt(0).Accept(this);
+                if (obj is double @double)
+                {
+                    Backward(@double);
+                }
+                else
+                {
+                    throw new InterpretException("Only number expression are allowed!");
+
+                }
+                return null;
+            }
+            throw new InterpretException("There is to much parameters in backward method! Only 1 is allowed!");
+        }
+
         #endregion METHOD
         #endregion STATEMENT
 
@@ -352,7 +393,8 @@ namespace LanguageLibrary.Interpreter
             if (message == "string")
             {
                 return String.Concat((string)expression.Left.Accept(this), (string)expression.Right.Accept(this));
-            } else if (message == "number")
+            }
+            else if (message == "number")
             {
                 return (double)expression.Left.Accept(this) + (double)expression.Right.Accept(this);
             }

@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace LanguageLibrary.Parser.Statements
 {
-    public class ForwardMethod : MethodStatement
+    public class RotateMethod : MethodStatement
     {
-        public ForwardMethod(IdentExpression expression, LinkedList<Expression> parameters) : base(expression, parameters)
+
+        public RotateMethod(IdentExpression expression, LinkedList<Expression> parameters) : base(expression, parameters)
         {
         }
+
         public override object Accept(IVisitor visitor)
         {
-            return visitor.VisitForwardMethod(this);
+            return visitor.VisitRotateMethod(this);
         }
     }
 }

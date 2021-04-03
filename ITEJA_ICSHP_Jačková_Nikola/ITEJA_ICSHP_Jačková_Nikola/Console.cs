@@ -23,12 +23,11 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             Turtle = Turtle.GetInstance();
             SetDelegates();
             InitializeComponent();
-            RunProgram();
         }
 
-        private void RunProgram()
+        private void RunProgram(PaintEventArgs e)
         {
-            Turtle.InitializeTurtle(splitContainer1.Panel2);
+            Turtle.InitializeTurtle(consolePanel.Panel2, e);
             Engine.Interpreter.Interpret();
         }
 
@@ -37,15 +36,31 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             richTextBoxConsole.Text += text + "\n";
         }
 
-        private void ForwardMethod(double distance = 20)
+        private void RotateMethod(double angle)
+        {
+            Turtle.Rotate(angle);
+        }
+
+        private void ForwardMethod(double distance)
         {
             Turtle.Forward(distance);
         }
-        
+        private void BackwardMethod(double distance)
+        {
+            Turtle.Backward(distance);
+        }
         private void SetDelegates()
         {
             Engine.Interpreter.SetPrint(PrintMethod);
             Engine.Interpreter.SetForward(ForwardMethod);
+            Engine.Interpreter.SetRotate(RotateMethod);
+            Engine.Interpreter.SetBackward(BackwardMethod);
+        }
+
+        private void ConsolePanel_DrawingPanel_Paint(object sender, PaintEventArgs e)
+        {
+            //TODO Reset
+            RunProgram(e);
         }
     }
 }

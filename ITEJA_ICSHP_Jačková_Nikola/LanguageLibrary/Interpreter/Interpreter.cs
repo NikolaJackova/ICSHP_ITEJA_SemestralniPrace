@@ -38,5 +38,15 @@ namespace LanguageLibrary.Interpreter
         {
             Engine.Forward = @delegate;
         }
+
+        public void SetRotate(RotateMethodDelegate @delegate)
+        {
+            Engine.Rotate = @delegate;
+        }
+
+        public void SetBackward(BackwardMethodDelegate @delegate)
+        {
+            Engine.Backward = @delegate;
+        }
     }
 }

@@ -12,7 +12,6 @@ using System.Windows.Forms;
 
 namespace ITEJA_ICSHP_Jačková_Nikola
 {
-    //TODO need refactor - duplicity
     class TreeViewBuilder : IVisitor
     {
         private Parser Parser { get; set; }
@@ -137,31 +136,19 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         #region METHOD
         public object VisitPrintMethod(PrintMethod method)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = method.Identifier.Identifier
-            };
-            TreeNode parameterNode = new TreeNode("Parameters");
-            node.Nodes.Add(parameterNode);
-            foreach (var parameter in method.Parameters)
-            {
-                parameterNode.Nodes.Add((TreeNode)parameter.Accept(this));
-            }
-            return node;
+            return MethodNode(method);
         }
         public object VisitForwardMethod(ForwardMethod method)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = method.Identifier.Identifier
-            };
-            TreeNode parameterNode = new TreeNode("Parameters");
-            node.Nodes.Add(parameterNode);
-            foreach (var parameter in method.Parameters)
-            {
-                parameterNode.Nodes.Add((TreeNode)parameter.Accept(this));
-            }
-            return node;
+            return MethodNode(method);
+        }
+        public object VisitRotateMethod(RotateMethod method)
+        {
+            return MethodNode(method);
+        }
+        public object VisitBackwardMethod(BackwardMethod method)
+        {
+            return MethodNode(method);
         }
         #endregion METHOD
         #endregion STATEMENT
@@ -169,67 +156,27 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         #region CONDITION
         public object VisitEqualsRel(EqualsRel condition)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Equal: =="
-            };
-            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
-            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
-            return node;
+            return BinaryRelCondition(condition);
         }
-
         public object VisitGreaterEqThanRel(GreaterEqThanRel condition)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Greater Equal Than: >="
-            };
-            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
-            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
-            return node;
+            return BinaryRelCondition(condition);
         }
-
         public object VisitGreaterThanRel(GreaterThanRel condition)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Greater Than: >"
-            };
-            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
-            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
-            return node;
+            return BinaryRelCondition(condition);
         }
-
         public object VisitLessEqThanRel(LessEqThanRel condition)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Less Equal Than: <="
-            };
-            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
-            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
-            return node;
+            return BinaryRelCondition(condition);
         }
-
         public object VisitLessThanRel(LessThanRel condition)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Less Than: <"
-            };
-            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
-            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
-            return node;
+            return BinaryRelCondition(condition);
         }
         public object VisitNotEqualRel(NotEqualRel condition)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Not Equal: !="
-            };
-            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
-            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
-            return node;
+            return BinaryRelCondition(condition);
         }
         public object VisitOneStatement(OneStatementCondition condition)
         {
@@ -245,62 +192,28 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         #region EXPRESSION
         public object VisitMinusUnary(MinusUnary expression)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Unary: -"
-            };
-            node.Nodes.Add((TreeNode)expression.Expression.Accept(this));
-            return node;
+            return UnaryExpression(expression);
         }
         public object VisitPlusUnary(PlusUnary expression)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Unary: +"
-            };
-            node.Nodes.Add((TreeNode)expression.Expression.Accept(this));
-            return node;
+            return UnaryExpression(expression);
         }
         #region BINARY_RELATION_EXPRESSION
         public object VisitDivide(Divide expression)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Divide: /"
-            };
-            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
-            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
-            return node;
+            return BinaryRelationExpression(expression);
         }
         public object VisitMultiply(Multiply expression)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Multiply: *"
-            };
-            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
-            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
-            return node;
+            return BinaryRelationExpression(expression);
         }
         public object VisitPlus(Plus expression)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Plus: +"
-            };
-            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
-            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
-            return node;
+            return BinaryRelationExpression(expression);
         }
         public object VisitMinus(Minus expression)
         {
-            TreeNode node = new TreeNode
-            {
-                Text = "Minus: -"
-            };
-            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
-            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
-            return node;
+            return BinaryRelationExpression(expression);
         }
         #endregion BINARY_RELATION_EXPRESSION
         public object VisitStringExpression(StringExpression expression)
@@ -331,5 +244,52 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             return node;
         }
         #endregion EXPRESSION
+
+        private object MethodNode(MethodStatement method)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = method.Identifier.Identifier
+            };
+            TreeNode parameterNode = new TreeNode("Parameters");
+            node.Nodes.Add(parameterNode);
+            foreach (var parameter in method.Parameters)
+            {
+                parameterNode.Nodes.Add((TreeNode)parameter.Accept(this));
+            }
+            return node;
+        }
+
+        private object BinaryRelCondition(BinaryRelCondition condition)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Operation: " + condition.Operation
+            };
+            node.Nodes.Add((TreeNode)condition.Left.Accept(this));
+            node.Nodes.Add((TreeNode)condition.Right.Accept(this));
+            return node;
+        }
+
+        private object BinaryRelationExpression(BinaryExpression expression)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Operation: " + expression.Operation
+            };
+            node.Nodes.Add((TreeNode)expression.Left.Accept(this));
+            node.Nodes.Add((TreeNode)expression.Right.Accept(this));
+            return node;
+        }
+
+        private object UnaryExpression(UnaryExpression expression)
+        {
+            TreeNode node = new TreeNode
+            {
+                Text = "Unary: " + expression.Operation
+            };
+            node.Nodes.Add((TreeNode)expression.Expression.Accept(this));
+            return node;
+        }
     }
 }

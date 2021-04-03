@@ -17,4 +17,11 @@ while (counter1 < 20){
    counter1 = counter1 + 1;
    method Print(counter1, " ", hello);
 }
+   method Forward(100);
+   method Rotate(90);
+   method Forward(100);
+   method Rotate(90);
+   method Forward(100);
+   method Rotate(90);
+   method Forward(100);
 END.

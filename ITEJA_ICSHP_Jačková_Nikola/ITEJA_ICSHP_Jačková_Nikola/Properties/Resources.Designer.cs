@@ -63,9 +63,9 @@ namespace ITEJA_ICSHP_Jačková_Nikola.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap turtle_png {
+        internal static System.Drawing.Bitmap turtle_colour {
             get {
-                object obj = ResourceManager.GetObject("turtle_png", resourceCulture);
+                object obj = ResourceManager.GetObject("turtle_colour", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

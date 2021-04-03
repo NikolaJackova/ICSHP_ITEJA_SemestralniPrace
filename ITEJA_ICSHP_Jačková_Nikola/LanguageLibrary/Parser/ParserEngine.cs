@@ -128,9 +128,12 @@ namespace LanguageLibrary.Parser
                     return new PrintMethod(identifier, parameters);
                 case "Forward":
                     return new ForwardMethod(identifier, parameters);
+                case "Rotate":
+                    return new RotateMethod(identifier, parameters);
+                case "Backward":
+                    return new BackwardMethod(identifier, parameters);
             }
-            //return new MethodStatement(identifier, parameters);
-            return null;
+            throw new ParserException("Method: " + identifier + " is unknown method!");
         }
 
         private LinkedList<Expression> GetParameters()
