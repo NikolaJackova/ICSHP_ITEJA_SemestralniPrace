@@ -201,12 +201,12 @@ namespace LanguageLibrary.Interpreter
                 }
                 return null;
             }
-            throw new InterpretException("There is too much parameters in forward method! Only 1 is allowed!");
+            throw new InterpretException("Wrong number of parameters in forward method! One parameter is allowed!");
         }
 
         public object VisitRotateMethod(RotateMethod method)
         {
-            if (method.Parameters.Count <= 1)
+            if (method.Parameters.Count == 1)
             {
                 object obj = method.Parameters.ElementAt(0).Accept(this);
                 if (obj is double @double)
@@ -220,7 +220,7 @@ namespace LanguageLibrary.Interpreter
 
                 return null;
             }
-            throw new InterpretException("There is too much parameters in rotate method! Only 1 is allowed!");
+            throw new InterpretException("Wrong number of parameters in rotate method! One parameter is allowed!");
         }
 
         public object VisitBackwardMethod(BackwardMethod method)
@@ -239,7 +239,7 @@ namespace LanguageLibrary.Interpreter
                 }
                 return null;
             }
-            throw new InterpretException("There is too much parameters in backward method! Only 1 is allowed!");
+            throw new InterpretException("Wrong number of parameters in backward method! One parameter is allowed!");
         }
         public object VisitChangePenMethod(ChangePenMethod method)
         {
@@ -261,7 +261,7 @@ namespace LanguageLibrary.Interpreter
                 }
                 return null;
             }
-            throw new InterpretException("There is too much parameters in backward method! Only 2 are allowed!");
+            throw new InterpretException("Wrong number of parameters in ChangePen method! Two parameters are allowed!");
         }
         public object VisitPenVisibleMethod(PenVisibileMethod method)
         {
@@ -279,7 +279,7 @@ namespace LanguageLibrary.Interpreter
                 }
                 return null;
             }
-            throw new InterpretException("There is to much parameters in visibility method! Only 1 is allowed!");
+            throw new InterpretException("Wrong number of parameters in PenVisible method! One parameter is allowed!");
         }
         #endregion METHOD
         #endregion STATEMENT
