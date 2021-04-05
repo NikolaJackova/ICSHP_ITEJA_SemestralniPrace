@@ -1,4 +1,4 @@
-﻿namespace ITEJA_ICSHP_Jačková_Nikola
+﻿namespace GUI
 {
     partial class InterpretGUI
     {

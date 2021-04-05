@@ -1,4 +1,5 @@
-﻿using LanguageLibrary.Parser;
+﻿using LanguageLibrary.Interpreter;
+using LanguageLibrary.Parser;
 using LanguageLibrary.Parser.Conditions;
 using LanguageLibrary.Parser.Expressions;
 using LanguageLibrary.Parser.Statements;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ITEJA_ICSHP_Jačková_Nikola
+namespace GUI
 {
     class TreeViewBuilder : IVisitor
     {

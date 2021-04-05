@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITEJA_ICSHP_Jačková_Nikola", "ITEJA_ICSHP_Jačková_Nikola\ITEJA_ICSHP_Jačková_Nikola.csproj", "{0D47F8BD-418E-4187-AF0F-5ED63FCC7E00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "ITEJA_ICSHP_Jačková_Nikola\GUI.csproj", "{0D47F8BD-418E-4187-AF0F-5ED63FCC7E00}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1FBDD7CC-3644-4708-B097-C4FDDECDCC1F} = {1FBDD7CC-3644-4708-B097-C4FDDECDCC1F}
 	EndProjectSection

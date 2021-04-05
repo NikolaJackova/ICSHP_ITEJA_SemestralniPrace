@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ITEJA_ICSHP_Jačková_Nikola
+namespace GUI
 {
     public partial class GrammarPopUp : Form
     {

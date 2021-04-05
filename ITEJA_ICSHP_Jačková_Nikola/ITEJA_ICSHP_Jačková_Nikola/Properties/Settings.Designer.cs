@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ITEJA_ICSHP_Jačková_Nikola.Properties
+namespace GUI.Properties
 {
 
 

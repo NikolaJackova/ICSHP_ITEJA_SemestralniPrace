@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITEJA_ICSHP_Jačková_Nikola
+namespace GUI
 {
     public class LanguageLibraryEngine
     {

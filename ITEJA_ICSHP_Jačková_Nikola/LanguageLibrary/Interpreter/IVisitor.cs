@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LanguageLibrary.Parser
+namespace LanguageLibrary.Interpreter
 {
     /// <summary>
     /// Interface for visitor pattern

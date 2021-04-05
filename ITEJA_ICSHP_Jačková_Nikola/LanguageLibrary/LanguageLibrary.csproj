@@ -50,7 +50,7 @@
     <Compile Include="Interpreter\Variable.cs" />
     <Compile Include="Interpreter\Variables.cs" />
     <Compile Include="Parser\IASTItem.cs" />
-    <Compile Include="Parser\IVisitor.cs" />
+    <Compile Include="Interpreter\IVisitor.cs" />
     <Compile Include="Interpreter\Interpreter.cs" />
     <Compile Include="Exceptions\LanguageException.cs" />
     <Compile Include="Lexer\Lexer.cs" />
@@ -93,7 +93,7 @@
     <Compile Include="Parser\Statements\PrintMethod.cs" />
     <Compile Include="Parser\Statements\RotateMethod.cs" />
     <Compile Include="Parser\Statements\SetStatement.cs" />
-    <Compile Include="Parser\Statements\SetVisibilityMethod.cs" />
+    <Compile Include="Parser\Statements\PenVisibleMethod.cs" />
     <Compile Include="Parser\Statements\Statement.cs" />
     <Compile Include="Parser\Statements\WhileStatement.cs" />
     <Compile Include="Parser\Variables\VariableDeclaration.cs" />

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using LanguageLibrary.Lexer;
 using LanguageLibrary.Parser;
 
-namespace ITEJA_ICSHP_Jačková_Nikola
+namespace GUI
 {
     static class Program
     {

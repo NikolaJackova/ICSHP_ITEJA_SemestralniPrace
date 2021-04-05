@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using LanguageLibrary.Interpreter;
 using LanguageLibrary.Parser;
 
-namespace ITEJA_ICSHP_Jačková_Nikola
+namespace GUI
 {
     public partial class Console : Form
     {
