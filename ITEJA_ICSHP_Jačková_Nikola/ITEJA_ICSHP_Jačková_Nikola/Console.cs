@@ -19,10 +19,10 @@ namespace ITEJA_ICSHP_Jačková_Nikola
 
         public Console(LanguageLibraryEngine engine)
         {
+            InitializeComponent();
             Engine = engine;
             Turtle = Turtle.GetInstance();
             SetDelegates();
-            InitializeComponent();
         }
 
         private void RunProgram(PaintEventArgs e)
@@ -49,17 +49,27 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         {
             Turtle.Backward(distance);
         }
+
+        private void ChangePenMethod(string color, double width)
+        {
+            Turtle.ChangePen(color, width);
+        }
+        private void SetVisibility(double visibility)
+        {
+            Turtle.SetVisibility(visibility);
+        }
         private void SetDelegates()
         {
             Engine.Interpreter.SetPrint(PrintMethod);
             Engine.Interpreter.SetForward(ForwardMethod);
             Engine.Interpreter.SetRotate(RotateMethod);
             Engine.Interpreter.SetBackward(BackwardMethod);
+            Engine.Interpreter.SetChangePen(ChangePenMethod);
+            Engine.Interpreter.SetPenVisible(SetVisibility);
         }
 
         private void ConsolePanel_DrawingPanel_Paint(object sender, PaintEventArgs e)
         {
-            //TODO Reset
             RunProgram(e);
         }
     }

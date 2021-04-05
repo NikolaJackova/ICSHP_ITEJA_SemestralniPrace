@@ -48,5 +48,15 @@ namespace LanguageLibrary.Interpreter
         {
             Engine.Backward = @delegate;
         }
+
+        public void SetChangePen(ChangePenDelegate @delegate)
+        {
+            Engine.ChangePen = @delegate;
+        }
+
+        public void SetPenVisible(PenVisibileDelegate @delegate)
+        {
+            Engine.PenVisible = @delegate;
+        }
     }
 }

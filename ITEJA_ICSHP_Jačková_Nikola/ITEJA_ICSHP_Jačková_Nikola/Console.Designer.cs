@@ -68,6 +68,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1192, 721);
             this.Controls.Add(this.consolePanel);
+            this.DoubleBuffered = true;
             this.Name = "Console";
             this.Text = "Console";
             this.consolePanel.Panel1.ResumeLayout(false);

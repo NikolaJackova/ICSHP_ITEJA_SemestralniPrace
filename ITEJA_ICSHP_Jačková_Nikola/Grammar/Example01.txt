@@ -19,7 +19,10 @@ while (counter1 < 20){
 }
    method Forward(100);
    method Rotate(90);
+   method PenVisible(0);
+   method ChangePen("red", 10);
    method Forward(100);
+   method PenVisible(1);
    method Rotate(90);
    method Forward(100);
    method Rotate(90);

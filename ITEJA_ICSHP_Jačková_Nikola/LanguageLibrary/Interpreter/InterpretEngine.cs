@@ -18,6 +18,8 @@ namespace LanguageLibrary.Interpreter
     public delegate void ForwardMethodDelegate(double distance);
     public delegate void BackwardMethodDelegate(double distance);
     public delegate void RotateMethodDelegate(double angle);
+    public delegate void ChangePenDelegate(string color, double width);
+    public delegate void PenVisibileDelegate(double visibility);
 
     class InterpretEngine : IVisitor
     {
@@ -25,6 +27,8 @@ namespace LanguageLibrary.Interpreter
         public ForwardMethodDelegate Forward { get; set; }
         public RotateMethodDelegate Rotate { get; set; }
         public BackwardMethodDelegate Backward { get; set; }
+        public PenVisibileDelegate PenVisible { get; set; }
+        public ChangePenDelegate ChangePen { get; set; }
         private Parser.Parser Parser { get; set; }
         private Stack<ExecutionContext> ExecutionContexts { get; set; }
 
@@ -36,7 +40,6 @@ namespace LanguageLibrary.Interpreter
 
         public void Interpret()
         {
-            ExecutionContexts.Push(new ExecutionContext());
             Program program = Parser.Parse();
             program.Accept(this);
         }
@@ -194,12 +197,12 @@ namespace LanguageLibrary.Interpreter
                 }
                 else
                 {
-                    throw new InterpretException("Only number expression are allowed!");
+                    throw new InterpretException("Only number expressions are allowed!");
 
                 }
                 return null;
             }
-            throw new InterpretException("There is to much parameters in forward method! Only 1 is allowed!");
+            throw new InterpretException("There is too much parameters in forward method! Only 1 is allowed!");
         }
 
         public object VisitRotateMethod(RotateMethod method)
@@ -213,12 +216,12 @@ namespace LanguageLibrary.Interpreter
                 }
                 else
                 {
-                    throw new InterpretException("Only number expression are allowed!");
+                    throw new InterpretException("Only number expressions are allowed!");
                 }
 
                 return null;
             }
-            throw new InterpretException("There is to much parameters in rotate method! Only 1 is allowed!");
+            throw new InterpretException("There is too much parameters in rotate method! Only 1 is allowed!");
         }
 
         public object VisitBackwardMethod(BackwardMethod method)
@@ -232,14 +235,53 @@ namespace LanguageLibrary.Interpreter
                 }
                 else
                 {
+                    throw new InterpretException("Only number expressions are allowed!");
+
+                }
+                return null;
+            }
+            throw new InterpretException("There is too much parameters in backward method! Only 1 is allowed!");
+        }
+        public object VisitChangePenMethod(ChangePenMethod method)
+        {
+            if (method.Parameters.Count == 2)
+            {
+                object obj = method.Parameters.ElementAt(0).Accept(this);
+                if (obj is string @string)
+                {
+                    object obj2 = method.Parameters.ElementAt(1).Accept(this);
+                    if (obj2 is double @double)
+                    {
+                        ChangePen(@string, @double);
+                    }
+                }
+                else
+                {
+                    throw new InterpretException("Only string expressions are allowed!");
+
+                }
+                return null;
+            }
+            throw new InterpretException("There is too much parameters in backward method! Only 2 are allowed!");
+        }
+        public object VisitPenVisibleMethod(PenVisibileMethod method)
+        {
+            if (method.Parameters.Count == 1)
+            {
+                object obj = method.Parameters.ElementAt(0).Accept(this);
+                if (obj is double @double)
+                {
+                    PenVisible(@double);
+                }
+                else
+                {
                     throw new InterpretException("Only number expression are allowed!");
 
                 }
                 return null;
             }
-            throw new InterpretException("There is to much parameters in backward method! Only 1 is allowed!");
+            throw new InterpretException("There is to much parameters in visibility method! Only 1 is allowed!");
         }
-
         #endregion METHOD
         #endregion STATEMENT
 

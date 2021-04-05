@@ -150,6 +150,14 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         {
             return MethodNode(method);
         }
+        public object VisitChangePenMethod(ChangePenMethod method)
+        {
+            return MethodNode(method);
+        }
+        public object VisitPenVisibleMethod(PenVisibileMethod method)
+        {
+            return MethodNode(method);
+        }
         #endregion METHOD
         #endregion STATEMENT
 

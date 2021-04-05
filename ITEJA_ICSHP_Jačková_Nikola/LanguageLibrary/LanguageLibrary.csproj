@@ -84,6 +84,7 @@
     <Compile Include="Parser\ParserEngine.cs" />
     <Compile Include="Parser\Program.cs" />
     <Compile Include="Parser\Statements\BackwardMethod.cs" />
+    <Compile Include="Parser\Statements\ChangePenMethod.cs" />
     <Compile Include="Parser\Statements\ElseStatement.cs" />
     <Compile Include="Parser\Statements\ForStatement.cs" />
     <Compile Include="Parser\Statements\ForwardMethod.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Parser\Statements\PrintMethod.cs" />
     <Compile Include="Parser\Statements\RotateMethod.cs" />
     <Compile Include="Parser\Statements\SetStatement.cs" />
+    <Compile Include="Parser\Statements\SetVisibilityMethod.cs" />
     <Compile Include="Parser\Statements\Statement.cs" />
     <Compile Include="Parser\Statements\WhileStatement.cs" />
     <Compile Include="Parser\Variables\VariableDeclaration.cs" />

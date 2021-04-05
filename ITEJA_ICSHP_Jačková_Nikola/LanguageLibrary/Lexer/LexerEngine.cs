@@ -57,7 +57,10 @@ namespace LanguageLibrary.Lexer
                     tokens.AddLast(new Token(CurrentChar.ToString(), TokenType.QUOTE));
                     NextChar();
                     tokens.AddLast(GetStringToken());
-                    tokens.AddLast(new Token(CurrentChar.ToString(), TokenType.QUOTE));
+                    if (CurrentChar == '\"')
+                    {
+                        tokens.AddLast(new Token(CurrentChar.ToString(), TokenType.QUOTE));
+                    }
                     NextChar();
                     continue;
                 }
@@ -87,7 +90,8 @@ namespace LanguageLibrary.Lexer
                     }
                     break;
                 }
-                else {
+                else
+                {
                     throw new LexerException("Invalid character: " + CurrentChar + "!");
                 }
             }

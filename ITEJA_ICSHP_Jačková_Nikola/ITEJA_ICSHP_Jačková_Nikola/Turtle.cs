@@ -22,13 +22,14 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             }
             return Instance;
         }
-        public float X { get; private set; }
-        public float Y { get; private set; }
-        public float Angle { get; private set; }
-        public int Delay { get; private set; }
+        private float X { get; set; }
+        private float Y { get; set; }
+        private float Angle { get; set; }
+        private int Delay { get; set; }
+        private bool PenVisible { get; set; }
         private Control Control { get; set; }
-        private Image TurtleImage { get; set; } = Resources.turtle_colour;
-        private Graphics Graphics { get; set; } = null;
+        private Image TurtleImage { get; set; }
+        private Graphics Graphics { get; set; }
         private Pen Pen { get; set; }
         private Point CenterPoint { get; set; }
 
@@ -36,14 +37,32 @@ namespace ITEJA_ICSHP_Jačková_Nikola
         {
             Control = control;
             Graphics = e.Graphics;
+            TurtleImage = Resources.turtle_colour;
             CenterPoint = new Point(control.Width / 2 - TurtleImage.Width / 2, control.Height / 2 - TurtleImage.Height / 2);
-
             X = CenterPoint.X;
             Y = CenterPoint.Y;
             Angle = 0;
-            Delay = 500;
+            Delay = 250;
 
             Pen = new Pen(Brushes.Black, 4);
+            PenVisible = true;
+        }
+
+        public void ChangePen(string color, double width)
+        {
+            Pen.Brush = new SolidBrush(Color.FromName(color));
+            Pen.Width = (float)width;
+        }
+
+        public void SetVisibility(double visibility)
+        {
+            if (visibility <= 0)
+            {
+                PenVisible = false;
+            } else
+            {
+                PenVisible = true;
+            }
         }
 
         public void Forward(double distance)
@@ -51,9 +70,10 @@ namespace ITEJA_ICSHP_Jačková_Nikola
             double angleRadians = Angle * Math.PI / 180;
             float newX = X + (float)(Math.Cos(angleRadians) * distance);
             float newY = Y + (float)(Math.Sin(angleRadians) * distance);
-
-            Graphics.DrawLine(Pen, X, Y, newX, newY);
-
+            if (PenVisible)
+            {
+                Graphics.DrawLine(Pen, X, Y, newX, newY);
+            }
             X = newX;
             Y = newY;
             DrawTurtle(0);

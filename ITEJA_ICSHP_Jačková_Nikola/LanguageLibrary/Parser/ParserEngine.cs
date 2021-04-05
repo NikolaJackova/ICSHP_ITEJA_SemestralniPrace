@@ -132,6 +132,10 @@ namespace LanguageLibrary.Parser
                     return new RotateMethod(identifier, parameters);
                 case "Backward":
                     return new BackwardMethod(identifier, parameters);
+                case "ChangePen":
+                    return new ChangePenMethod(identifier, parameters);
+                case "PenVisible":
+                    return new PenVisibileMethod(identifier, parameters);
             }
             throw new ParserException("Method: " + identifier + " is unknown method!");
         }
@@ -355,25 +359,25 @@ namespace LanguageLibrary.Parser
 
         private void NextToken(TokenType type, string message)
         {
-            if (CurrentToken.TokenType == type)
+            if (CurrentToken?.TokenType == type)
             {
                 CurrentToken = Lexer.GetNextToken();
             }
             else
             {
-                throw new ParserException(message + "\nToken: " + CurrentToken.ToString() + ".");
+                throw new ParserException(message + "\nToken: " + CurrentToken?.ToString() + ".");
             }
         }
 
         private void NextToken(TokenType type)
         {
-            if (CurrentToken.TokenType == type)
+            if (CurrentToken?.TokenType == type)
             {
                 CurrentToken = Lexer.GetNextToken();
             }
             else
             {
-                throw new ParserException("TokenType does not match!\nToken: " + CurrentToken.ToString() + ".");
+                throw new ParserException("TokenType does not match!\nToken: " + CurrentToken?.ToString() + ".");
             }
         }
     }

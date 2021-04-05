@@ -50,6 +50,8 @@ namespace LanguageLibrary.Parser
         object VisitForwardMethod(ForwardMethod method);
         object VisitRotateMethod(RotateMethod method);
         object VisitBackwardMethod(BackwardMethod method);
+        object VisitChangePenMethod(ChangePenMethod method);
+        object VisitPenVisibleMethod(PenVisibileMethod method);
         #endregion STATEMENT
 
         object VisitBlock(Block block);
