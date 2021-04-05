@@ -4,10 +4,8 @@ Interpret pro fiktivní jazyk. Práce se skládá ze dvou projektů: LanguageLib
 LanguageLibrary obsahuje zdrojové soubory pro interpretaci jazyka a GUI vytváří grafické uživatelské prostředí
 a umožňujě grafické zobrazení výstupu zdrojového kódu v podobě želví grafiky.
 
-Gramatika jazyka:
-[Gramatika](ITEJA_ICSHP_Jačková_Nikola/Grammar/ITEJA_Grammar.txt)
+[Gramatika jazyka](ITEJA_ICSHP_Jačková_Nikola/Grammar/ITEJA_Grammar.txt)
 
-Dokumentace:
 [Dokumentace](ITEJA_ICSHP_Jačková_Nikola/Documentation/ITEJA_ICSHP_JačkováNikola.docx)
 
 ### Příklady zdrojových kódů
