@@ -55,9 +55,11 @@
             // 
             // richTextBoxConsole
             // 
+            this.richTextBoxConsole.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.richTextBoxConsole.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxConsole.Location = new System.Drawing.Point(0, 0);
             this.richTextBoxConsole.Name = "richTextBoxConsole";
+            this.richTextBoxConsole.ReadOnly = true;
             this.richTextBoxConsole.Size = new System.Drawing.Size(465, 721);
             this.richTextBoxConsole.TabIndex = 1;
             this.richTextBoxConsole.Text = "";

@@ -1,30 +1,66 @@
 BEGIN
-var hello, counter1;
-hello = "Hello World!";
-counter1 = 0;
-while (counter1 < 20){
-   if(counter1 == 5){
-      counter1 = counter1 + 5;
+var i, j, k, message;
+
+//Draw a flower
+method ChangePen("green", 3);
+method Rotate(270);
+method PenVisible(0);
+method Backward(250);
+method PenVisible(1);
+for i, from 1 to 2, i = i+1; {
+   for j, from 1 to 9, j = j+1; {
+      method Forward(5);
+      method Rotate(10);
+      method Forward(5);
    }
-   if(hello == "Hello World!"){
-      method Print(hello, "is Hello World!");
-   }
-   if(hello > "Hello"){
-      method Print(hello, " is bigger than Hello");
-   } else {
-   method Print(hello, "is smaller than Hello World!");
-   }
-   counter1 = counter1 + 1;
-   method Print(counter1, " ", hello);
+   method Rotate(90);
 }
-   method Forward(100);
+method Rotate(270);
+for i, from 1 to 2, i = i+1; {
+   for j, from 1 to 9, j = j+1; {
+      method Forward(5);
+      method Rotate(10);
+      method Forward(5);
+   }
    method Rotate(90);
-   method PenVisible(0);
-   method ChangePen("red", 10);
-   method Forward(100);
-   method PenVisible(1);
-   method Rotate(90);
-   method Forward(100);
-   method Rotate(90);
-   method Forward(100);
+}
+method Rotate(90);
+method Forward(200);
+method ChangePen("red", 3);
+for k, from 1 to 10, k = k+1; {
+   for i, from 1 to 2, i = i+1; {
+      for j, from 1 to 9, j = j+1; {
+         method Forward(5);
+         method Rotate(10);
+         method Forward(5);
+      }
+      method Rotate(90);
+   }
+   method Rotate(36);
+}
+
+//Move turtle without drawing
+method PenVisible(0);
+method Forward(150);
+method Rotate(90);
+method Forward(150);
+method Rotate(270);
+method PenVisible(1);
+
+//Draw a heart
+method Rotate(305);
+method Forward(50);
+for i, from 1 to 19, i = i+1; {
+   method Rotate(10);
+   method Forward(5);
+}
+method Rotate(270);
+for i, from 1 to 19, i = i+1; {
+   method Forward(5);
+   method Rotate(10);
+}
+method Forward(50);
+method Rotate(235);
+message = "This is a very nice flower and a heart drawn by cute little turtle.";
+method Print(message);
 END.

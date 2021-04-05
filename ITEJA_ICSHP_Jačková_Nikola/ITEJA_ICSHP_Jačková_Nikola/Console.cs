@@ -29,6 +29,7 @@ namespace GUI
         {
             Turtle.InitializeTurtle(consolePanel.Panel2, e);
             Engine.Interpreter.Interpret();
+            Turtle.DrawTurtle();
         }
 
         private void PrintMethod(string text)
@@ -70,7 +71,15 @@ namespace GUI
 
         private void ConsolePanel_DrawingPanel_Paint(object sender, PaintEventArgs e)
         {
-            RunProgram(e);
+            richTextBoxConsole.Clear();
+            try
+            {
+                RunProgram(e);
+            }
+            catch (LanguageLibrary.Exceptions.LanguageException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

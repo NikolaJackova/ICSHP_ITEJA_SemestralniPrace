@@ -19,8 +19,6 @@ namespace GUI
         {
             Engine = LanguageLibraryEngine.GetInstance();
             InitializeComponent();
-            //For testing purposes
-            loadExample01ToolStripMenuItem.PerformClick();
         }
 
         #region FILE

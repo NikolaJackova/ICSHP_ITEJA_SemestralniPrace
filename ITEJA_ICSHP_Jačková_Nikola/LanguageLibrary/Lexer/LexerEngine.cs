@@ -81,6 +81,10 @@ namespace LanguageLibrary.Lexer
                     }
                     break;
                 }
+                else if (CurrentChar == '/' && ShowNextChar() == '/')
+                {
+                    SkipComment();
+                }
                 else if (IsOneCharToken())
                 {
                     tokens.AddLast(GetOneSymbolToken());
@@ -229,6 +233,14 @@ namespace LanguageLibrary.Lexer
         {
             bool nextChar = true;
             while (nextChar && char.IsWhiteSpace(CurrentChar))
+            {
+                nextChar = NextChar();
+            }
+        }
+        private void SkipComment()
+        {
+            bool nextChar = true;
+            while (nextChar && CurrentChar != '\n')
             {
                 nextChar = NextChar();
             }

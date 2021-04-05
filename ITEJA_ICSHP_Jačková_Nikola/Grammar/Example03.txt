@@ -1,23 +1,10 @@
 BEGIN
-var a, hello12345, i;
-a = 0;
-hello12345 = "Hello World!";
-if(a == 0){
-   for i, from 1 to 10, i = i+1; {
-      a = i;
-      method Print(a);
-   }
-} else {
-   hello12345 = "World!";
+var i, message;
+method ChangePen("blue", 3);
+for i, from 1 to 36, i = i+1; {
+   method Forward(250);
+   method Rotate(170);
 }
-while(1 != a){
-      if(a == 5){
-      	method Print("If branch!");
-      } else {
-	method Print("Else branch!");	
-      }
-      a = a - 1;
-      method Print(a);
-}
-method Print(hello12345, a);
+message = "This is a very nice star drawn by cute turtle with blue pen.";
+method Print(message);
 END.

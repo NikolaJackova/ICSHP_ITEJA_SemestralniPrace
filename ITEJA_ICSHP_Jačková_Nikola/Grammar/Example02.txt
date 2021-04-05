@@ -1,17 +1,23 @@
 BEGIN
-var a, b, c, i;
-a = 1.5;
-b = 10;
-for i, from a to b, i = i+1; {
-   c = b + i;
+var i, j, forward, message;
+forward = 20;
+
+//Move turtle without drawing
+method PenVisible(0);
+method Forward(forward*3);
+method ChangePen("red", 3);
+method Backward(30);
+method PenVisible(1);
+
+//Draw circles
+for i, from 1 to 12, i = i +1; {
+   for j, from 1 to 36, j = j +1; {
+      method Forward(forward);
+      method Rotate(10);
+   }
+   method Rotate(30);
+   method Forward(forward);
 }
-method Print(a, " ", b, " ", c);
-method Print(b+c+a);
-b = a;
-method Print(a, b);
-if(a >= b){
-   method Print("A is bigger or equal than B!");
-} else {
-   method Print("B is bigger than A!");
-}
+message = "This is a very nice red circle drawn by cute little turtle.";
+method Print(message);
 END.

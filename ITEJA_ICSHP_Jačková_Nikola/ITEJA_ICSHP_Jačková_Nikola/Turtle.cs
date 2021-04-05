@@ -42,7 +42,7 @@ namespace GUI
             X = CenterPoint.X;
             Y = CenterPoint.Y;
             Angle = 0;
-            Delay = 250;
+            Delay = 150;
 
             Pen = new Pen(Brushes.Black, 4);
             PenVisible = true;
@@ -76,8 +76,7 @@ namespace GUI
             }
             X = newX;
             Y = newY;
-            DrawTurtle(0);
-            Paint();
+            MoveTurtle();
         }
 
         public void Backward(double distance)
@@ -88,41 +87,36 @@ namespace GUI
         public void Rotate(double angle)
         {
             Angle += (float)angle;
-            DrawTurtle((float)angle);
-            Paint();
+            MoveTurtle();
         }
 
-        private void DrawTurtle(float angle)
+        private void MoveTurtle()
         {
-            Image oldImage = TurtleImage;
-            TurtleImage = RotateTurtle(angle);
-            oldImage.Dispose();
+            TurtleImage = RotateTurtle(Resources.turtle_colour, Angle);
+        }
+
+        public void DrawTurtle()
+        {
             Graphics.DrawImage(TurtleImage, new PointF(X - TurtleImage.Width / 2, Y - TurtleImage.Height / 2));
         }
 
-        private Bitmap RotateTurtle(float angle)
+        private Bitmap RotateTurtle(Image image, float angle)
         {
-            Bitmap rotatedImage = new Bitmap(TurtleImage.Width, TurtleImage.Height);
-            rotatedImage.SetResolution(TurtleImage.HorizontalResolution, TurtleImage.VerticalResolution);
+            Bitmap rotatedImage = new Bitmap(image.Width, image.Height);
+            rotatedImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
             using (Graphics graphics = Graphics.FromImage(rotatedImage))
             {
-                graphics.TranslateTransform(TurtleImage.Width / 2, TurtleImage.Height / 2);
+                graphics.TranslateTransform(image.Width / 2, image.Height / 2);
 
                 graphics.RotateTransform(angle);
 
-                graphics.TranslateTransform(-TurtleImage.Width / 2, -TurtleImage.Height / 2);
+                graphics.TranslateTransform(-image.Width / 2, -image.Height / 2);
 
-                graphics.DrawImage(TurtleImage, new Point(0, 0));
+                graphics.DrawImage(image, new Point(0, 0));
             }
+            image.Dispose();
             return rotatedImage;
-        }
-
-        private void Paint()
-        {
-            Control.Update();
-            Thread.Sleep(Delay);
-            Application.DoEvents();
         }
     }
 }

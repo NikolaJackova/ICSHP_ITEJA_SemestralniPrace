@@ -183,7 +183,6 @@ namespace LanguageLibrary.Interpreter
                 builder.Append(parameter.Accept(this));
             }
             Print(builder.ToString());
-            Console.WriteLine(builder.ToString());
             return null;
         }
         public object VisitForwardMethod(ForwardMethod method)
