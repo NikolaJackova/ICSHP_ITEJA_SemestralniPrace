@@ -65,9 +65,10 @@ namespace GUI
                 {
                     fileContent = reader.ReadToEnd();
                 }
+                editorTextBox.Text = fileContent;
+                saveToolStripMenuItem1.Enabled = true;
             }
-            editorTextBox.Text = fileContent;
-            saveToolStripMenuItem1.Enabled = true;
+
         }
         private void SaveToolStripMenuItem1_Click(object sender, EventArgs e)
         {
