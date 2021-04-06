@@ -89,7 +89,7 @@
             this.helpToolStripMenuItem});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
-            this.menuBar.Size = new System.Drawing.Size(1182, 28);
+            this.menuBar.Size = new System.Drawing.Size(1382, 28);
             this.menuBar.TabIndex = 0;
             this.menuBar.Text = "menuBar";
             // 
@@ -360,7 +360,7 @@
             this.editorTextBox.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.editorTextBox.Location = new System.Drawing.Point(0, 0);
             this.editorTextBox.Name = "editorTextBox";
-            this.editorTextBox.Size = new System.Drawing.Size(393, 525);
+            this.editorTextBox.Size = new System.Drawing.Size(459, 825);
             this.editorTextBox.TabIndex = 2;
             this.editorTextBox.Text = "";
             // 
@@ -371,7 +371,7 @@
             this.tokensTextBox.Location = new System.Drawing.Point(0, 0);
             this.tokensTextBox.Name = "tokensTextBox";
             this.tokensTextBox.ReadOnly = true;
-            this.tokensTextBox.Size = new System.Drawing.Size(421, 525);
+            this.tokensTextBox.Size = new System.Drawing.Size(493, 825);
             this.tokensTextBox.TabIndex = 3;
             this.tokensTextBox.Text = "";
             // 
@@ -380,7 +380,7 @@
             this.treeViewAST.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewAST.Location = new System.Drawing.Point(0, 0);
             this.treeViewAST.Name = "treeViewAST";
-            this.treeViewAST.Size = new System.Drawing.Size(360, 525);
+            this.treeViewAST.Size = new System.Drawing.Size(422, 825);
             this.treeViewAST.TabIndex = 4;
             // 
             // splitContainer1
@@ -396,8 +396,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.treeViewAST);
-            this.splitContainer1.Size = new System.Drawing.Size(1182, 525);
-            this.splitContainer1.SplitterDistance = 818;
+            this.splitContainer1.Size = new System.Drawing.Size(1382, 825);
+            this.splitContainer1.SplitterDistance = 956;
             this.splitContainer1.TabIndex = 5;
             // 
             // splitContainer2
@@ -413,15 +413,15 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tokensTextBox);
-            this.splitContainer2.Size = new System.Drawing.Size(818, 525);
-            this.splitContainer2.SplitterDistance = 393;
+            this.splitContainer2.Size = new System.Drawing.Size(956, 825);
+            this.splitContainer2.SplitterDistance = 459;
             this.splitContainer2.TabIndex = 0;
             // 
             // InterpretGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1182, 553);
+            this.ClientSize = new System.Drawing.Size(1382, 853);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuBar);
             this.MainMenuStrip = this.menuBar;

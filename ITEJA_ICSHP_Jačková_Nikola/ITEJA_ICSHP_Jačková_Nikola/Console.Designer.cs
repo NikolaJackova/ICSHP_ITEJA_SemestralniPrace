@@ -49,8 +49,8 @@
             // 
             this.consolePanel.Panel2.BackColor = System.Drawing.SystemColors.Info;
             this.consolePanel.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.ConsolePanel_DrawingPanel_Paint);
-            this.consolePanel.Size = new System.Drawing.Size(1192, 721);
-            this.consolePanel.SplitterDistance = 465;
+            this.consolePanel.Size = new System.Drawing.Size(1382, 853);
+            this.consolePanel.SplitterDistance = 539;
             this.consolePanel.TabIndex = 0;
             // 
             // richTextBoxConsole
@@ -60,7 +60,7 @@
             this.richTextBoxConsole.Location = new System.Drawing.Point(0, 0);
             this.richTextBoxConsole.Name = "richTextBoxConsole";
             this.richTextBoxConsole.ReadOnly = true;
-            this.richTextBoxConsole.Size = new System.Drawing.Size(465, 721);
+            this.richTextBoxConsole.Size = new System.Drawing.Size(539, 853);
             this.richTextBoxConsole.TabIndex = 1;
             this.richTextBoxConsole.Text = "";
             // 
@@ -68,7 +68,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 721);
+            this.ClientSize = new System.Drawing.Size(1382, 853);
             this.Controls.Add(this.consolePanel);
             this.DoubleBuffered = true;
             this.Name = "Console";
