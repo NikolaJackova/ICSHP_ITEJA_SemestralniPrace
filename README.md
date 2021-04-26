@@ -10,10 +10,10 @@ a umožňujě grafické zobrazení výstupu zdrojového kódu v podobě želví 
 
 ### Příklady zdrojových kódů
 Příklad vykreslující květinu a srdce:
-[Example01.txt](ITEJA_ICSHP_Jačková_Nikola/Grammar/Example01.txt)
+[Example01.txt](ITEJA_ICSHP_Jačková_Nikola/Examples/Example01.txt)
 
 Příklad vykreslující kruhy:
-[Example02.txt](ITEJA_ICSHP_Jačková_Nikola/Grammar/Example02.txt)
+[Example02.txt](ITEJA_ICSHP_Jačková_Nikola/Examples/Example02.txt)
 
 Příklad vykreslující hvězdu:
-[Example03.txt](ITEJA_ICSHP_Jačková_Nikola/Grammar/Example03.txt)
+[Example03.txt](ITEJA_ICSHP_Jačková_Nikola/Examples/Example03.txt)

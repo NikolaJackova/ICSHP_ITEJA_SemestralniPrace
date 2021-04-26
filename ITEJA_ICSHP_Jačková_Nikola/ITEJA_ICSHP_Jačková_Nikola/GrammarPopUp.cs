@@ -15,7 +15,7 @@ namespace GUI
         public GrammarPopUp(string text)
         {
             InitializeComponent();
-            richTextBox1.Text = text;
+            richTextBoxGrammar.Text = text;
         }
     }
 }

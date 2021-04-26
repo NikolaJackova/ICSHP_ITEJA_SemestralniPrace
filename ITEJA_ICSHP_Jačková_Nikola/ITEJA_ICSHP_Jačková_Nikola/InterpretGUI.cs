@@ -99,19 +99,19 @@ namespace GUI
         }
         private void OpenExample01ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example01.txt", out string path);
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Examples\Example01.txt", out string path);
             FilePath = path;
             saveToolStripMenuItem1.Enabled = true;
         }
         private void OpenExample02ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example02.txt", out string path);
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Examples\Example02.txt", out string path);
             FilePath = path;
             saveToolStripMenuItem1.Enabled = true;
         }
         private void OpenExample03ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Grammar\Example03.txt", out string path);
+            editorTextBox.Text = OpenFileFromRootProjectDirectory(@"Examples\Example03.txt", out string path);
             FilePath = path;
             saveToolStripMenuItem1.Enabled = true;
         }
